@@ -6,4 +6,8 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+router.get('/healthcheck', function(req, res, next) {
+  res.json({ message: 'The server is running (CanvasAPI)' })
+});
+
 module.exports = router;
