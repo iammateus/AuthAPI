@@ -1,0 +1,21 @@
+version: "3.3"
+
+services:
+  bootstrap:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+    command: ./.docker/bootstrap.sh
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+    depends_on:
+      - bootstrap
+    ports:
+      - '8000:3000'
