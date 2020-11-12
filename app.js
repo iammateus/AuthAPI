@@ -1,11 +1,16 @@
-var express = require("express");
-var path = require("path");
-var cookieParser = require("cookie-parser");
-var logger = require("morgan");
+const express = require("express");
+const path = require("path");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
+const {
+    ReasonPhrases,
+    StatusCodes,
+    getReasonPhrase,
+} = require("http-status-codes");
 
-var indexRouter = require("./routes/index");
+const indexRouter = require("./routes/index");
 
-var app = express();
+const app = express();
 
 app.use(logger("dev"));
 app.use(express.json());
@@ -15,10 +20,10 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
 
-// catch 404 and forward to error handler
+// 404 handler
 app.use(function (req, res, next) {
-    res.status(404).json({
-        message: "The route and method was not found.",
+    res.status(StatusCodes.NOT_FOUND).json({
+        message: ReasonPhrases.NOT_FOUND,
     });
 });
 
@@ -28,8 +33,9 @@ app.use(function (err, req, res, next) {
     res.locals.message = err.message;
     res.locals.error = req.app.get("env") === "development" ? err : {};
 
-    res.status(404).json({
-        message: "Internal Server Error",
+    const statusCode = err.status || StatusCodes.INTERNAL_SERVER_ERROR;
+    res.status(statusCode).json({
+        message: getReasonPhrase(statusCode),
     });
 });
 
