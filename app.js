@@ -8,7 +8,7 @@ const {
     getReasonPhrase,
 } = require("http-status-codes");
 
-const indexRouter = require("./routes/index");
+const indexRouter = require("./app/routes/index");
 
 const app = express();
 
