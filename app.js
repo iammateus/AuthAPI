@@ -1,16 +1,29 @@
-const express = require("express");
-const path = require("path");
-const cookieParser = require("cookie-parser");
-const logger = require("morgan");
 const {
     ReasonPhrases,
     StatusCodes,
     getReasonPhrase,
 } = require("http-status-codes");
-
+const path = require("path");
+const logger = require("morgan");
+const mongoose = require("mongoose");
+const express = require("express");
+const cookieParser = require("cookie-parser");
 const indexRouter = require("./app/routes/index");
 
 const app = express();
+
+const uri = "mongodb://mongo:27017/canvas-api";
+mongoose.connect(uri, {
+    auth: { authSource: "admin" },
+    user: "root",
+    pass: "docker",
+});
+
+const connection = mongoose.connection;
+
+connection.once("open", function () {
+    console.log("MongoDB database connection established successfully");
+});
 
 app.use(logger("dev"));
 app.use(express.json());
