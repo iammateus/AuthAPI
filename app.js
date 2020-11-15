@@ -1,3 +1,8 @@
+/**
+ * Booting dotenv
+ */
+require("dotenv").config();
+
 const {
     ReasonPhrases,
     StatusCodes,

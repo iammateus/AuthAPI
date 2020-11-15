@@ -9,6 +9,12 @@ const bootstrapDatabase = () => {
 
     const uri = "mongodb://" + host + ":" + port + "/" + dbName;
 
+    console.log("Connecting to Mongodb with the following config", {
+        uri,
+        user,
+        pass,
+    });
+
     mongoose.connect(uri, {
         auth: { authSource: "admin" },
         user: user,
