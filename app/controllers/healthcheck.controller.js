@@ -1,5 +1,3 @@
-const User = require("../models/User");
-
 const runHealthcheck = (req, res, next) => {
     res.json({ message: "The server is running (CanvasAPI)" });
 };
