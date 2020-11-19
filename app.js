@@ -13,6 +13,7 @@ const logger = require("morgan");
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const indexRouter = require("./app/routes/index");
+const authRouter = require("./app/routes/auth");
 const bootstrapDatabase = require("./bin/bootstrapDatabase");
 
 const app = express();
@@ -26,6 +27,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
+app.use("/", authRouter);
 
 // 404 handler
 app.use(function (req, res, next) {
