@@ -14,11 +14,8 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const indexRouter = require("./app/routes/index");
 const authRouter = require("./app/routes/auth");
-const bootstrapDatabase = require("./bin/bootstrapDatabase");
 
 const app = express();
-
-bootstrapDatabase();
 
 app.use(logger("dev"));
 app.use(express.json());
