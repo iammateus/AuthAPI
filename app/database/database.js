@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const connect = () => {
+const connect = async () => {
     const host = process.env.DB_HOST;
     const port = process.env.DB_PORT;
     const dbName = process.env.DB_NAME;
@@ -9,23 +9,24 @@ const connect = () => {
 
     const uri = "mongodb://" + host + ":" + port + "/" + dbName;
 
-    console.log("Connecting to Mongodb with the following config", {
-        uri,
-        user,
-        pass,
-    });
-
-    mongoose.connect(uri, {
+    await mongoose.connect(uri, {
         auth: { authSource: "admin" },
         useNewUrlParser: true,
         useUnifiedTopology: true,
         user: user,
         pass: pass,
     });
+
+    console.log("Connecting to Mongodb with the following config", {
+        uri,
+        user,
+        pass,
+    });
 };
 
-const disconnect = () => {
-    mongoose.connection.close();
+const disconnect = async () => {
+    await mongoose.connection.close();
+    console.log("MongoDB was disconnected successfully");
 };
 
 module.exports = { connect, disconnect };
