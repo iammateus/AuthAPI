@@ -4,9 +4,15 @@ const { StatusCodes } = require("http-status-codes");
 const faker = require("faker");
 
 describe("auth/register", () => {
-    it("should exist", async () => {
-        const response = await request(app).post("/auth/register");
-        expect(response.status === StatusCodes.NOT_FOUND).toBe(false);
+    it("should register  user", async () => {
+        const pass = faker.lorem.word(8);
+        const data = {
+            email: faker.internet.email(),
+            password: pass,
+            password_confirmation: pass,
+        };
+        const response = await request(app).post("/auth/register").send(data);
+        expect(response.status).toEqual(StatusCodes.OK);
     });
     it("should return unprocessable entity when email is not informed", async () => {
         const data = {};
@@ -30,6 +36,51 @@ describe("auth/register", () => {
             path: ["email"],
             type: "string.email",
             context: { label: "email", key: "email" },
+        });
+    });
+    it("should return unprocessable entity when password is not informed", async () => {
+        const data = {
+            email: faker.internet.email(),
+        };
+        const response = await request(app).post("/auth/register").send(data);
+        expect(response.status).toEqual(StatusCodes.UNPROCESSABLE_ENTITY);
+        expect(response.body).toMatchObject({
+            message: '"password" is required',
+            path: ["password"],
+            type: "any.required",
+            context: { label: "password", key: "password" },
+        });
+    });
+    it("should return unprocessable entity when password is too short", async () => {
+        const data = {
+            email: faker.internet.email(),
+            password: faker.lorem.word(7),
+        };
+        const response = await request(app).post("/auth/register").send(data);
+        expect(response.status).toEqual(StatusCodes.UNPROCESSABLE_ENTITY);
+        expect(response.body).toMatchObject({
+            message: '"password" length must be at least 8 characters long',
+            path: ["password"],
+            type: "string.min",
+            context: { label: "password", key: "password" },
+        });
+    });
+    it("should return unprocessable entity when password_confirmation is not equal to password", async () => {
+        const data = {
+            email: faker.internet.email(),
+            password: faker.lorem.word(8),
+            password_confirmation: faker.lorem.word(9),
+        };
+        const response = await request(app).post("/auth/register").send(data);
+        expect(response.status).toEqual(StatusCodes.UNPROCESSABLE_ENTITY);
+        expect(response.body).toMatchObject({
+            message: '"password_confirmation" must be [ref:password]',
+            path: ["password_confirmation"],
+            type: "any.only",
+            context: {
+                label: "password_confirmation",
+                key: "password_confirmation",
+            },
         });
     });
 });
