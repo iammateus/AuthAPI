@@ -1,7 +1,7 @@
 const Joi = require("joi");
 
 const PostAuthRegister = Joi.object({
-    email: Joi.required(),
+    email: Joi.string().email().required(),
 });
 
 module.exports = PostAuthRegister;
