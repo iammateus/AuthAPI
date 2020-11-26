@@ -1,5 +1,5 @@
 const request = require("supertest");
-const app = require("../app");
+const app = require("../index");
 const { StatusCodes, ReasonPhrases } = require("http-status-codes");
 
 describe("app", () => {
