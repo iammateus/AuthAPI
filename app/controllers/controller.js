@@ -5,7 +5,7 @@ const validate = (data, joySchema, res) => {
     try {
         validator.validate(joySchema, data);
     } catch (error) {
-        res.status(StatusCodes.UNPROCESSABLE_ENTITY).json(error);
+        return res.status(StatusCodes.UNPROCESSABLE_ENTITY).json(error);
     }
 };
 

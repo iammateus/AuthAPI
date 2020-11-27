@@ -18,16 +18,20 @@ const connect = async () => {
         pass,
     });
 
-    log("database -> Connecting to Mongodb with the following config", {
-        uri,
-        user,
-        pass,
-    });
+    log("database:connect -> Connecting to MongoDB");
 };
 
 const disconnect = async () => {
     await mongoose.connection.close();
-    log("database -> MongoDB was disconnected successfully");
+    log("database:disconnect -> MongoDB was disconnected successfully");
 };
+
+mongoose.connection.on("connected", () => {
+    log("database -> Connected to Mongodb with the following config");
+});
+
+mongoose.connection.on("error", () => {
+    log("database -> Connection error", { error });
+});
 
 module.exports = { connect, disconnect };

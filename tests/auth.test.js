@@ -1,10 +1,16 @@
 const request = require("supertest");
-const app = require("../index");
 const { StatusCodes } = require("http-status-codes");
+const app = require("../index");
+const User = require("../app/models/User");
 const faker = require("faker");
+const database = require("../app/database/database");
+jest.mock("../app/database/database");
+const databaseMock = require("./mock/database.mock");
+database.connect.mockImplementation(databaseMock.connect);
+database.disconnect.mockImplementation(databaseMock.disconnect);
 
 describe("auth/register", () => {
-    it("should register  user", async () => {
+    it("should register user", async () => {
         const pass = faker.lorem.word(8);
         const data = {
             email: faker.internet.email(),
@@ -12,7 +18,13 @@ describe("auth/register", () => {
             password_confirmation: pass,
         };
         const response = await request(app).post("/auth/register").send(data);
-        expect(response.status).toEqual(StatusCodes.OK);
+        expect(response.status).toEqual(StatusCodes.CREATED);
+
+        const user = await User.findOne({
+            email: data.email,
+            password: data.password,
+        });
+        expect(user).toBeTruthy();
     });
     it("should return unprocessable entity when email is not informed", async () => {
         const data = {};
