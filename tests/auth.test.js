@@ -3,11 +3,7 @@ const { StatusCodes } = require("http-status-codes");
 const app = require("../index");
 const User = require("../app/models/User");
 const faker = require("faker");
-const database = require("../app/database/database");
-jest.mock("../app/database/database");
-const databaseMock = require("./mock/database.mock");
-database.connect.mockImplementation(databaseMock.connect);
-database.disconnect.mockImplementation(databaseMock.disconnect);
+process.env.APP_ENV = "test";
 
 describe("auth/register", () => {
     it("should register user", async () => {
