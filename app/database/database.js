@@ -1,9 +1,6 @@
 const mongoose = require("mongoose");
 const { log } = console;
-
-const env = () => {
-    return process.env.APP_ENV;
-};
+const env = require("../helpers/env.helper");
 
 const connect = async () => {
     const host = process.env.DB_HOST;
@@ -12,7 +9,7 @@ const connect = async () => {
     const user = process.env.DB_USER;
     const pass = process.env.DB_PASS;
     const uri =
-        env() === "test"
+        env("APP_ENV") === "test"
             ? global.__MONGO_URI__
             : "mongodb://" + host + ":" + port + "/" + name;
 
@@ -22,7 +19,7 @@ const connect = async () => {
     }
 
     let options =
-        env() === "test"
+        env("APP_ENV") === "test"
             ? {
                   useNewUrlParser: true,
                   useCreateIndex: true,
