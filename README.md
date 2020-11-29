@@ -1,3 +1,5 @@
 # CanvasAPI
 
-The project Canvas' back end.
+An API that provides an way of sign-in and sign-up to the Canvas project. 
+
+
