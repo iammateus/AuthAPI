@@ -3,10 +3,15 @@ const { StatusCodes } = require("http-status-codes");
 const app = require("../index");
 const User = require("../app/models/User");
 const faker = require("faker");
-process.env.APP_ENV = "test";
+const { connect } = require("./mocks/database.mock");
 
 describe("auth/register", () => {
+    beforeAll(async () => {
+        await connect();
+    });
+
     it("should register user", async () => {
+        await connect();
         const pass = faker.lorem.word(8);
         const data = {
             email: faker.internet.email(),
@@ -22,6 +27,7 @@ describe("auth/register", () => {
         });
         expect(user).toBeTruthy();
     });
+
     it("should return unprocessable entity when email is not informed", async () => {
         const data = {};
         const response = await request(app).post("/auth/register").send(data);
@@ -33,6 +39,7 @@ describe("auth/register", () => {
             context: { label: "email", key: "email" },
         });
     });
+
     it("should return unprocessable entity when email is not a valid email", async () => {
         const data = {
             email: faker.lorem.sentence(),
@@ -46,6 +53,7 @@ describe("auth/register", () => {
             context: { label: "email", key: "email" },
         });
     });
+
     it("should return unprocessable entity when password is not informed", async () => {
         const data = {
             email: faker.internet.email(),
@@ -59,6 +67,7 @@ describe("auth/register", () => {
             context: { label: "password", key: "password" },
         });
     });
+
     it("should return unprocessable entity when password is too short", async () => {
         const data = {
             email: faker.internet.email(),
@@ -73,6 +82,7 @@ describe("auth/register", () => {
             context: { label: "password", key: "password" },
         });
     });
+
     it("should return unprocessable entity when password_confirmation is not equal to password", async () => {
         const data = {
             email: faker.internet.email(),
