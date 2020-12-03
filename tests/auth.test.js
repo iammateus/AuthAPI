@@ -4,11 +4,15 @@ const app = require("../index");
 const User = require("../app/models/User");
 const faker = require("faker");
 const { mockDatabaseConfig } = require("./mocks/databaseConfig.mock");
+const { mockDatabase } = require("./mocks/database.mock");
+const database = require("../app/database/database");
 
 describe("auth/register", () => {
     beforeAll(() => {
         mockDatabaseConfig();
+        mockDatabase();
     });
+
     it("should register user", async () => {
         const pass = faker.lorem.word(8);
         const data = {
@@ -98,5 +102,10 @@ describe("auth/register", () => {
                 key: "password_confirmation",
             },
         });
+    });
+
+    afterAll(async () => {
+        database.disconnect.mockRestore();
+        await database.disconnect();
     });
 });
