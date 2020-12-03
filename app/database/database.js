@@ -46,7 +46,7 @@ const connect = async () => {
 };
 
 const disconnect = async () => {
-    // await mongoose.connection.close();
+    await mongoose.connection.close();
     log("database:disconnect -> MongoDB was disconnected successfully");
 };
 
