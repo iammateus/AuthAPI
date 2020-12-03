@@ -3,11 +3,11 @@ const { StatusCodes } = require("http-status-codes");
 const app = require("../index");
 const User = require("../app/models/User");
 const faker = require("faker");
-const { mockDatabase } = require("./mocks/database.mock");
+const { mockDatabaseConfig } = require("./mocks/databaseConfig.mock");
 
 describe("auth/register", () => {
     beforeAll(() => {
-        mockDatabase();
+        mockDatabaseConfig();
     });
     it("should register user", async () => {
         const pass = faker.lorem.word(8);

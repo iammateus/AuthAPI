@@ -1,28 +1,6 @@
 const mongoose = require("mongoose");
 const { log } = console;
-
-const getDatabaseUri = () => {
-    const host = process.env.DB_HOST;
-    const port = process.env.DB_PORT;
-    const name = process.env.DB_NAME;
-    const uri = "mongodb://" + host + ":" + port + "/" + name;
-    return uri;
-};
-
-const getDatabaseConnectionOptions = () => {
-    const user = process.env.DB_USER;
-    const pass = process.env.DB_PASS;
-    const options = {
-        auth: {
-            authSource: "admin",
-        },
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        user,
-        pass,
-    };
-    return options;
-};
+const databaseConfig = require("./databaseConfig");
 
 const connect = async () => {
     if (isDatabaseConnected()) {
@@ -30,8 +8,8 @@ const connect = async () => {
         return;
     }
 
-    const uri = getDatabaseUri();
-    const options = getDatabaseConnectionOptions();
+    const uri = databaseConfig.getDatabaseUri();
+    const options = databaseConfig.getDatabaseConnectionOptions();
 
     log(
         "database:connect -> Trying to connect with MongoDB with the following configuration",
@@ -41,8 +19,8 @@ const connect = async () => {
         }
     );
 
-    await mongoose.connect(uri, options);
     setMongooseEventHandlers();
+    await mongoose.connect(uri, options);
 };
 
 const disconnect = async () => {
@@ -64,22 +42,11 @@ const setMongooseEventHandlers = () => {
     });
 
     mongoose.connection.on("disconnected", function () {
-        log(disconnected("MongoDB is disconnected"));
-    });
-
-    process.on("SIGINT", function () {
-        mongoose.connection.close(function () {
-            console.log(
-                "Mongoose default connection is disconnected due to application termination"
-            );
-            process.exit(0);
-        });
+        log("MongoDB is disconnected");
     });
 };
 
 module.exports = {
     connect,
     disconnect,
-    getDatabaseConnectionOptions,
-    getDatabaseUri,
 };

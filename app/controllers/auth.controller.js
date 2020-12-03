@@ -12,7 +12,6 @@ const register = async (req, res, next) => {
     await database.connect();
     const user = new User(req.body);
     await user.save();
-    await database.disconnect();
     res.status(StatusCodes.CREATED).json({
         message: "The user was created successfully",
     });
