@@ -21,4 +21,9 @@ const mockDatabaseConfig = () => {
     );
 };
 
-module.exports = { mockDatabaseConfig };
+const unmockDatabaseConfig = () => {
+    databaseConfig.getDatabaseUri.mockRestore();
+    databaseConfig.getDatabaseConnectionOptions.mockRestore();
+};
+
+module.exports = { mockDatabaseConfig, unmockDatabaseConfig };

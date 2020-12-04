@@ -3,13 +3,14 @@ const { StatusCodes } = require("http-status-codes");
 const app = require("../index");
 const User = require("../app/models/User");
 const faker = require("faker");
-const { mockDatabaseConfig } = require("./mocks/databaseConfig.mock");
-const { mockDatabase } = require("./mocks/database.mock");
+const {
+    mockDatabase,
+    unmockDatabase,
+} = require("./mocks/database.mock");
 const database = require("../app/database/database");
 
 describe("auth/register", () => {
     beforeAll(() => {
-        mockDatabaseConfig();
         mockDatabase();
     });
 
@@ -105,7 +106,7 @@ describe("auth/register", () => {
     });
 
     afterAll(async () => {
-        database.disconnect.mockRestore();
+        unmockDatabase();
         await database.disconnect();
     });
 });
