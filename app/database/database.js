@@ -25,7 +25,6 @@ const connect = async () => {
 
 const disconnect = async () => {
     await mongoose.connection.close();
-    log("database:disconnect -> MongoDB was disconnected successfully");
 };
 
 const isDatabaseConnected = () => {
@@ -34,15 +33,15 @@ const isDatabaseConnected = () => {
 
 const setMongooseEventHandlers = () => {
     mongoose.connection.on("connected", function () {
-        log("MongoDB is connected.");
+        log("Mongoose connection was opened successfully.");
     });
 
     mongoose.connection.on("error", function (error) {
-        log("A MongoDB error occurred", { error });
+        log("A mongoose error has occurred", { error });
     });
 
     mongoose.connection.on("disconnected", function () {
-        log("MongoDB is disconnected");
+        log("Mongoose connection was closed successfully");
     });
 };
 
