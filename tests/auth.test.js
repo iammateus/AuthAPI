@@ -3,15 +3,13 @@ const { StatusCodes } = require("http-status-codes");
 const app = require("../index");
 const User = require("../app/models/User");
 const faker = require("faker");
-const {
-    mockDatabase,
-    unmockDatabase,
-} = require("./mocks/database.mock");
+const { mockDatabase, unmockDatabase } = require("./mocks/database.mock");
 const database = require("../app/database/database");
 
 describe("auth/register", () => {
     beforeAll(() => {
         mockDatabase();
+        database.connect();
     });
 
     it("should register user", async () => {
