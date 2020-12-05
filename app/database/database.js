@@ -37,11 +37,11 @@ const setMongooseEventHandlers = () => {
     });
 
     mongoose.connection.on("error", function (error) {
-        log("A mongoose error has occurred", { error });
+        log("A mongoose error has occurred: ", { error });
     });
 
     mongoose.connection.on("disconnected", function () {
-        log("Mongoose connection was closed successfully");
+        log("Mongoose connection was closed successfully.");
     });
 };
 
