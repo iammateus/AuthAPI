@@ -2,7 +2,6 @@ const { validate } = require("../controllers/controller");
 const PostAuthRegister = require("../validations/PostAuthRegister");
 const User = require("../models/User");
 const { StatusCodes } = require("http-status-codes");
-const database = require("../database/database");
 
 const register = async (req, res, next) => {
     const error = validate(req.body, PostAuthRegister, res);
