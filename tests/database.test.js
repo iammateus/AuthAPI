@@ -17,6 +17,14 @@ describe("database:connect", () => {
         expect(mongoose.connection.readyState).toEqual(status.CONNECTED);
     });
 
+    it("should return undefined and not try to connect again", async () => {
+        jest.spyOn(mongoose, "connect");
+        mongoose.connect = jest.fn();
+        const result = await connect();
+        expect(result).toEqual(undefined);
+        expect(mongoose.connect.mock.calls.length).toEqual(0);
+    });
+
     afterAll(async () => {
         await disconnect();
     });
