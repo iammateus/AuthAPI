@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const { log } = console;
+const status = require("./states");
 const databaseConfig = require("./databaseConfig");
 
 const connect = async () => {
@@ -28,7 +29,7 @@ const disconnect = async () => {
 };
 
 const isDatabaseConnected = () => {
-    return mongoose.connection.readyState === 1;
+    return mongoose.connection.readyState === status.CONNECTED;
 };
 
 const setMongooseEventHandlers = () => {
