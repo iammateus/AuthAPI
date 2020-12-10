@@ -1,6 +1,6 @@
 
 # Canvas API
-The auth API of the project [Canvas](https://github.com/iammateus/Canvas).
+The authentication API of the project [Canvas](https://github.com/iammateus/Canvas).
 
 This API is not the real-time online service that will provide means of playing Canvas in multiplayer mode, the goal of this project is to make it possible to sign-up and sign-in on the app.
 
