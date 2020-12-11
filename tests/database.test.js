@@ -1,7 +1,10 @@
 const mongoose = require("mongoose");
 const status = require("../app/database/states");
 const { connect, disconnect } = require("../app/database/database");
-const { mockDatabaseConfig } = require("./mocks/databaseConfig.mock");
+const {
+    mockDatabaseConfig,
+    unmockDatabaseConfig,
+} = require("./mocks/databaseConfig.mock");
 
 describe("database:connect", () => {
     beforeAll(() => {
@@ -24,8 +27,16 @@ describe("database:connect", () => {
         expect(result).toEqual(undefined);
         expect(mongoose.connect.mock.calls.length).toEqual(0);
     });
+});
 
-    afterAll(async () => {
+describe("database:disconnect", () => {
+    it("should be a function", () => {
+        expect(disconnect).toBeInstanceOf(Function);
+    });
+
+    it("should create mongo connection", async () => {
+        // The connection is opened by the test of connection above
         await disconnect();
+        expect(mongoose.connection.readyState).toEqual(status.DISCONNECTED);
     });
 });
