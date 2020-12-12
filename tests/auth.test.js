@@ -6,7 +6,7 @@ const faker = require("faker");
 const { mockDatabase, unmockDatabase } = require("./mocks/database.mock");
 const database = require("../app/database/database");
 
-describe("auth/register", () => {
+describe("/auth/register", () => {
     beforeAll(() => {
         mockDatabase();
         database.connect();
