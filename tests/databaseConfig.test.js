@@ -14,4 +14,20 @@ describe("databaseConfig:getDatabaseUri", () => {
         const result = databaseConfig.getDatabaseUri();
         expect(result).toEqual(uri);
     });
+
+    it("should return mongo connection options", () => {
+        const user = env("DB_USER");
+        const pass = env("DB_PASS");
+        const options = {
+            auth: {
+                authSource: "admin",
+            },
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+            user,
+            pass,
+        };
+        const result = databaseConfig.getDatabaseConnectionOptions();
+        expect(result).toMatchObject(options);
+    });
 });
