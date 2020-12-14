@@ -27,6 +27,7 @@ describe("/auth/register", () => {
             password: data.password,
         });
         expect(user).toBeTruthy();
+        expect(user._id).toBeTruthy();
     });
 
     it("should return unprocessable entity when email is not informed", async () => {
