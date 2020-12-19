@@ -5,6 +5,7 @@ const User = require("../app/models/User");
 const faker = require("faker");
 const { mockDatabase, unmockDatabase } = require("./mocks/database.mock");
 const database = require("../app/database/database");
+const { check } = require("../app/helpers/passwordHash.helper");
 
 describe("/auth/register", () => {
     beforeAll(() => {
@@ -24,10 +25,14 @@ describe("/auth/register", () => {
 
         const user = await User.findOne({
             email: data.email,
-            password: data.password,
         });
         expect(user).toBeTruthy();
-        expect(user._id).toBeTruthy();
+
+        const savedHashMatchesInformedPass = await check(
+            data.password,
+            user.password
+        );
+        expect(savedHashMatchesInformedPass).toBe(true);
     });
 
     it("should return unprocessable entity when email is not informed", async () => {
