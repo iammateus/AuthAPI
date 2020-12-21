@@ -109,6 +109,20 @@ describe("/auth/register", () => {
         });
     });
 
+    it("should not register a user with a existing email", async () => {
+        const pass = faker.lorem.word(8);
+        const data = {
+            email: faker.internet.email(),
+            password: pass,
+            password_confirmation: pass,
+        };
+        const user = new User(data);
+        await user.save();
+
+        const response = await request(app).post("/auth/register").send(data);
+        expect(response.status).toEqual(StatusCodes.UNPROCESSABLE_ENTITY);
+    });
+
     afterAll(async () => {
         unmockDatabase();
         await database.disconnect();
