@@ -4,14 +4,13 @@ const User = require("../models/User");
 const { StatusCodes } = require("http-status-codes");
 
 const register = async (req, res, next) => {
-    const { body } = req;
-    const error = validate(body, PostAuthRegister, res);
+    const error = validate(req.body, PostAuthRegister, res);
     if (error) {
         return error;
     }
 
     const isEmailInUse = await User.findOne({
-        email: body.email,
+        email: req.body.email,
     });
     if (isEmailInUse) {
         return res
@@ -19,7 +18,7 @@ const register = async (req, res, next) => {
             .json({ message: '"email" is already in use' });
     }
 
-    const user = new User(body);
+    const user = new User(req.body);
     await user.save();
     res.status(StatusCodes.CREATED).json({
         message: "The user was created successfully",

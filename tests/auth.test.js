@@ -109,7 +109,7 @@ describe("/auth/register", () => {
         });
     });
 
-    it("should not register a user with a existing email", async () => {
+    it("should not register an user with an existing email", async () => {
         const pass = faker.lorem.word(8);
         const data = {
             email: faker.internet.email(),
@@ -121,6 +121,9 @@ describe("/auth/register", () => {
 
         const response = await request(app).post("/auth/register").send(data);
         expect(response.status).toEqual(StatusCodes.UNPROCESSABLE_ENTITY);
+        expect(response.body).toMatchObject({
+            message: '"email" is already in use',
+        });
     });
 
     afterAll(async () => {
