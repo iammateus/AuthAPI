@@ -17,6 +17,7 @@ describe("/auth/register", () => {
         const pass = faker.lorem.word(8);
         const data = {
             email: faker.internet.email(),
+            name: faker.lorem.words(2),
             password: pass,
             password_confirmation: pass,
         };
@@ -25,6 +26,7 @@ describe("/auth/register", () => {
 
         const user = await User.findOne({
             email: data.email,
+            name: data.name,
         });
         expect(user).toBeTruthy();
 
@@ -109,12 +111,30 @@ describe("/auth/register", () => {
         });
     });
 
+    it("should return unprocessable entity when password_confirmation is not equal to password", async () => {
+        const pass = faker.lorem.word(8);
+        const data = {
+            email: faker.internet.email(),
+            password: pass,
+            password_confirmation: pass,
+        };
+        const response = await request(app).post("/auth/register").send(data);
+        expect(response.status).toEqual(StatusCodes.UNPROCESSABLE_ENTITY);
+        expect(response.body).toMatchObject({
+            message: '"name" is required',
+            path: ["name"],
+            type: "any.required",
+            context: { label: "name", key: "name" },
+        });
+    });
+
     it("should not register an user with an existing email", async () => {
         const pass = faker.lorem.word(8);
         const data = {
             email: faker.internet.email(),
             password: pass,
             password_confirmation: pass,
+            name: faker.lorem.words(2),
         };
         const user = new User(data);
         await user.save();

@@ -8,6 +8,7 @@ const UserSchema = new Schema({
         unique: true,
     },
     password: String,
+    name: String,
 });
 
 UserSchema.pre("save", async function save(next) {
