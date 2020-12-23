@@ -3,12 +3,17 @@ const Schema = mongoose.Schema;
 const { hash } = require("../helpers/passwordHash.helper");
 
 const UserSchema = new Schema({
-    email: String,
+    email: {
+        type: String,
+        unique: true,
+    },
     password: String,
 });
 
 UserSchema.pre("save", async function save(next) {
-    if (!this.isModified("password")) return next();
+    if (!this.isModified("password")) {
+        return next();
+    }
     try {
         this.password = await hash(this.password);
         return next();
