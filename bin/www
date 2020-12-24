@@ -28,12 +28,15 @@ startServer();
  * Start the server
  */
 async function startServer() {
-    setTimeout(async () => {
+    try {
         await database.connect();
         server.listen(port);
         server.on("error", onError);
         server.on("listening", onListening);
-    }, 5000);
+    } catch (error) {
+        const waitForDatabaseDelay = env("WAIT_FOR_DATABASE_DELAY") || 0;
+        setTimeout(startServer, waitForDatabaseDelay);
+    }
 }
 
 /**
