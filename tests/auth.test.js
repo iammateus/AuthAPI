@@ -144,6 +144,11 @@ describe("/auth/register", () => {
         expect(response.body).toMatchObject({
             message: '"email" is already in use',
         });
+
+        const users = await User.find({
+            email: data.email,
+        });
+        expect(users.length).toEqual(1);
     });
 
     afterAll(async () => {
