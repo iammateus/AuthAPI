@@ -35,6 +35,10 @@ async function startServer() {
         server.on("listening", onListening);
     } catch (error) {
         const waitForDatabaseDelay = env("WAIT_FOR_DATABASE_DELAY") || 0;
+        console.log(
+            `An error has occurred while starting the server, trying again in ${waitForDatabaseDelay} milliseconds. \n Error: `,
+            error
+        );
         setTimeout(startServer, waitForDatabaseDelay);
     }
 }
