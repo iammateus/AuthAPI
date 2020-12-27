@@ -15,12 +15,12 @@ describe("controller:validate", () => {
         controller.validate(data, mokedJoySchema);
 
         expect(validator.validate.mock.calls.length).toBe(1);
-        expect(validator.validate.mock.calls[0][0]).toMatchObject(
-            mokedJoySchema
-        );
+        expect(validator.validate.mock.calls[0][0]).toMatchObject(data);
 
         expect(validator.validate.mock.calls.length).toBe(1);
-        expect(validator.validate.mock.calls[0][1]).toMatchObject(data);
+        expect(validator.validate.mock.calls[0][1]).toMatchObject(
+            mokedJoySchema
+        );
     });
     it("should return response if validation fails", async () => {
         validator.validate.mockImplementationOnce(async () => {

@@ -15,7 +15,7 @@ describe("validator:validate", () => {
     it("should execute joy schema param's validateAsync with data", async () => {
         const data = {};
         const mokedSchema = { validateAsync: jest.fn() };
-        await validator.validate(mokedSchema, data);
+        await validator.validate(data, mokedSchema);
         expect(mokedSchema.validateAsync.mock.calls.length).toBe(1);
         expect(mokedSchema.validateAsync.mock.calls[0][0]).toMatchObject(data);
     });
@@ -23,7 +23,7 @@ describe("validator:validate", () => {
         const data = {};
         const mokedSchema = getJoiSchema();
         try {
-            await validator.validate(mokedSchema, data);
+            await validator.validate(data, mokedSchema);
         } catch (error) {
             expect(error).toMatchObject({
                 message: '"name" is required',

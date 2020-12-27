@@ -1,4 +1,4 @@
-const validate = async (joiSchema, data) => {
+const validate = async (data, joiSchema) => {
     try {
         await joiSchema.validateAsync(data);
     } catch (error) {
