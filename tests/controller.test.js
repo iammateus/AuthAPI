@@ -9,8 +9,8 @@ describe("controller:validate", () => {
     });
     it("should validate joySchema with the given data", () => {
         validator.validate = jest.fn();
-        const mokedJoySchema = { validate: jest.fn() };
         const data = {};
+        const mokedJoySchema = { validateAsync: jest.fn() };
 
         controller.validate(data, mokedJoySchema);
 
@@ -22,8 +22,8 @@ describe("controller:validate", () => {
         expect(validator.validate.mock.calls.length).toBe(1);
         expect(validator.validate.mock.calls[0][1]).toMatchObject(data);
     });
-    it("should return response if validation fails", () => {
-        validator.validate.mockImplementationOnce(() => {
+    it("should return response if validation fails", async () => {
+        validator.validate.mockImplementationOnce(async () => {
             throw {
                 message: "Error",
             };
@@ -37,7 +37,7 @@ describe("controller:validate", () => {
             }),
         };
 
-        controller.validate({}, {}, res);
+        await controller.validate({}, {}, res);
 
         expect(res.status.mock.calls.length).toBe(1);
         expect(res.status.mock.calls[0][0]).toEqual(
