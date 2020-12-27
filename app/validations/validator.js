@@ -1,7 +1,8 @@
-const validate = (joiSchema, data) => {
-    const result = joiSchema.validate(data);
-    if (result && result.error) {
-        throw result.error.details[0];
+const validate = async (joiSchema, data) => {
+    try {
+        await joiSchema.validateAsync(data);
+    } catch (error) {
+        throw error.details[0];
     }
 };
 

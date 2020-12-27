@@ -4,18 +4,9 @@ const User = require("../models/User");
 const { StatusCodes } = require("http-status-codes");
 
 const register = async (req, res, next) => {
-    const error = validate(req.body, PostAuthRegister, res);
+    const error = await validate(req.body, PostAuthRegister, res);
     if (error) {
         return error;
-    }
-
-    const isEmailInUse = await User.findOne({
-        email: req.body.email,
-    });
-    if (isEmailInUse) {
-        return res
-            .status(StatusCodes.UNPROCESSABLE_ENTITY)
-            .json({ message: '"email" is already in use' });
     }
 
     const user = new User(req.body);
