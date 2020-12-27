@@ -9,14 +9,16 @@ const getJoiSchema = () => {
 };
 
 describe("validator:validate", () => {
-    /* it("should be a function", () => {
+    it("should be a function", () => {
         expect(validator.validate).toBeInstanceOf(Function);
     });
-    it("should execute joy schema param's validation", async () => {
+    it("should execute joy schema param's validateAsync with data", async () => {
+        const data = {};
         const mokedSchema = { validateAsync: jest.fn() };
-        await validator.validate(mokedSchema);
+        await validator.validate(mokedSchema, data);
         expect(mokedSchema.validateAsync.mock.calls.length).toBe(1);
-    }); */
+        expect(mokedSchema.validateAsync.mock.calls[0][0]).toMatchObject(data);
+    });
     it("should throw error when validation fails", async () => {
         const data = {};
         const mokedSchema = getJoiSchema();
