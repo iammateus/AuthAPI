@@ -37,6 +37,11 @@ describe("/auth/register", () => {
         expect(savedHashMatchesInformedPass).toBe(true);
     });
 
+    it("should exists", async () => {
+        const response = await request(app).post("/auth/register");
+        expect(response.status !== StatusCodes.NOT_FOUND).toBe(true);
+    });
+
     it("should return unprocessable entity when email is not informed", async () => {
         const data = {};
         const response = await request(app).post("/auth/register").send(data);
