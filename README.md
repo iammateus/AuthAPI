@@ -23,4 +23,5 @@ Run all tests
 @todo
 
 ## License
-@todo
+
+[MIT](https://github.com/iammateus/CanvasAPI/blob/master/LICENSE)
