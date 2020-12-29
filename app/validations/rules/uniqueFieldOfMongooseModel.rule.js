@@ -1,8 +1,7 @@
-const uniqueFieldOfMongooseModel = async (key, model, value, helpers) => {
-    const record = await model.findOne({ [key]: value });
-    const error = { message: `"${key}" is already in use` };
+const uniqueFieldOfMongooseModel = async (model, field, value, helpers) => {
+    const record = await model.findOne({ [field]: value });
     if (record) {
-        throw { details: [error] };
+        throw { details: [{ message: '"' + field + '" is already in use' }] };
     }
 };
 

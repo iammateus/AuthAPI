@@ -2,7 +2,7 @@ const Joi = require("joi");
 const User = require("../models/User");
 
 const uniqueFieldOfMongooseModel = require("./rules/uniqueFieldOfMongooseModel.rule");
-const uniqueEmail = uniqueFieldOfMongooseModel.bind(null, "email", User);
+const uniqueEmail = uniqueFieldOfMongooseModel.bind(null, User, "email");
 
 const PostAuthRegister = Joi.object({
     email: Joi.string().email().external(uniqueEmail).required(),
