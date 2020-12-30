@@ -163,8 +163,19 @@ describe("/auth/register", () => {
 });
 
 describe("/auth/login", () => {
+    it("should return ok status", async () => {
+        const data = {
+            email: "asdf",
+        };
+        const response = await request(app).post("/auth/login").send(data);
+        expect(response.status).toEqual(StatusCodes.OK);
+    });
     it("should exist", async () => {
         const response = await request(app).post("/auth/login");
         expect(response.status !== StatusCodes.NOT_FOUND).toBe(true);
+    });
+    it("should return unprocessable entity when email is not informed", async () => {
+        const response = await request(app).post("/auth/login");
+        expect(response.status).toEqual(StatusCodes.UNPROCESSABLE_ENTITY);
     });
 });
