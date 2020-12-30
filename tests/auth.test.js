@@ -161,3 +161,10 @@ describe("/auth/register", () => {
         await database.disconnect();
     });
 });
+
+describe("/auth/login", () => {
+    it("should exist", async () => {
+        const response = await request(app).post("/auth/login");
+        expect(response.status !== StatusCodes.NOT_FOUND).toBe(true);
+    });
+});
