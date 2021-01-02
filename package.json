@@ -4,7 +4,9 @@
     "private": true,
     "scripts": {
         "start": "nodemon ./bin/www",
-        "test": "jest --no-cache --colors --collectCoverage --verbose"
+        "test": "jest --no-cache --colors --collectCoverage --verbose",
+        "test-watch": "jest --no-cache --colors --collectCoverage --verbose --watch",
+        "test-search": "jest --no-cache --colors --collectCoverage --verbose -t"
     },
     "dependencies": {
         "@shelf/jest-mongodb": "^1.2.3",
