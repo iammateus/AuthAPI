@@ -8,9 +8,9 @@ const database = require("../app/database/database");
 const { check } = require("../app/helpers/passwordHash.helper");
 
 describe("/auth/register", () => {
-    beforeAll(() => {
+    beforeAll(async () => {
         mockDatabase();
-        database.connect();
+        await database.connect();
     });
 
     it("should register user", async () => {
