@@ -2,14 +2,17 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const { hash } = require("../helpers/passwordHash.helper");
 
-const UserSchema = new Schema({
-    email: {
-        type: String,
-        unique: true,
+const UserSchema = new Schema(
+    {
+        email: {
+            type: String,
+            unique: true,
+        },
+        password: String,
+        name: String,
     },
-    password: String,
-    name: String,
-});
+    { timestamps: true }
+);
 
 UserSchema.pre("save", async function save(next) {
     if (!this.isModified("password")) {
