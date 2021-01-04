@@ -166,6 +166,7 @@ describe("/auth/login", () => {
     it("should return ok status", async () => {
         const data = {
             email: faker.internet.email(),
+            password: faker.lorem.word(8),
         };
         const response = await request(app).post("/auth/login").send(data);
         expect(response.status).toEqual(StatusCodes.OK);
@@ -195,6 +196,33 @@ describe("/auth/login", () => {
             path: ["email"],
             type: "string.email",
             context: { label: "email", key: "email" },
+        });
+    });
+    it("should return unprocessable entity when password is not informed", async () => {
+        const data = {
+            email: faker.internet.email(),
+        };
+        const response = await request(app).post("/auth/login").send(data);
+        expect(response.status).toEqual(StatusCodes.UNPROCESSABLE_ENTITY);
+        expect(response.body).toMatchObject({
+            message: '"password" is required',
+            path: ["password"],
+            type: "any.required",
+            context: { label: "password", key: "password" },
+        });
+    });
+    it("should return unprocessable entity when password is too short", async () => {
+        const data = {
+            email: faker.internet.email(),
+            password: faker.lorem.word(7),
+        };
+        const response = await request(app).post("/auth/login").send(data);
+        expect(response.status).toEqual(StatusCodes.UNPROCESSABLE_ENTITY);
+        expect(response.body).toMatchObject({
+            message: '"password" length must be at least 8 characters long',
+            path: ["password"],
+            type: "string.min",
+            context: { label: "password", key: "password" },
         });
     });
 });
