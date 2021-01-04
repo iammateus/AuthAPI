@@ -165,7 +165,7 @@ describe("/auth/register", () => {
 describe("/auth/login", () => {
     it("should return ok status", async () => {
         const data = {
-            email: "asdf",
+            email: faker.internet.email(),
         };
         const response = await request(app).post("/auth/login").send(data);
         expect(response.status).toEqual(StatusCodes.OK);
@@ -177,5 +177,24 @@ describe("/auth/login", () => {
     it("should return unprocessable entity when email is not informed", async () => {
         const response = await request(app).post("/auth/login");
         expect(response.status).toEqual(StatusCodes.UNPROCESSABLE_ENTITY);
+        expect(response.body).toMatchObject({
+            message: '"email" is required',
+            path: ["email"],
+            type: "any.required",
+            context: { label: "email", key: "email" },
+        });
+    });
+    it("should return unprocessable entity when email is invalid", async () => {
+        const data = {
+            email: faker.lorem.word(),
+        };
+        const response = await request(app).post("/auth/login").send(data);
+        expect(response.status).toEqual(StatusCodes.UNPROCESSABLE_ENTITY);
+        expect(response.body).toMatchObject({
+            message: '"email" must be a valid email',
+            path: ["email"],
+            type: "string.email",
+            context: { label: "email", key: "email" },
+        });
     });
 });
