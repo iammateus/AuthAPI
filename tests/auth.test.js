@@ -171,10 +171,12 @@ describe("/auth/login", () => {
         const response = await request(app).post("/auth/login").send(data);
         expect(response.status).toEqual(StatusCodes.OK);
     });
+
     it("should exist", async () => {
         const response = await request(app).post("/auth/login");
         expect(response.status !== StatusCodes.NOT_FOUND).toBe(true);
     });
+    
     it("should return unprocessable entity when email is not informed", async () => {
         const response = await request(app).post("/auth/login");
         expect(response.status).toEqual(StatusCodes.UNPROCESSABLE_ENTITY);
@@ -185,6 +187,7 @@ describe("/auth/login", () => {
             context: { label: "email", key: "email" },
         });
     });
+
     it("should return unprocessable entity when email is invalid", async () => {
         const data = {
             email: faker.lorem.word(),
@@ -198,6 +201,7 @@ describe("/auth/login", () => {
             context: { label: "email", key: "email" },
         });
     });
+
     it("should return unprocessable entity when password is not informed", async () => {
         const data = {
             email: faker.internet.email(),
@@ -211,6 +215,7 @@ describe("/auth/login", () => {
             context: { label: "password", key: "password" },
         });
     });
+
     it("should return unprocessable entity when password is too short", async () => {
         const data = {
             email: faker.internet.email(),
