@@ -5,7 +5,7 @@ const faker = require("faker");
 
 describe("create", () => {
     beforeAll(() => {
-        process.env.AUTH_SECRET = faker.lorem.word();
+        env.set("AUTH_SECRET", faker.lorem.word());
     });
     it("should be a function", () => {
         expect(create).toBeInstanceOf(Function);
