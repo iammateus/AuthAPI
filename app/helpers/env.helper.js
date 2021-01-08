@@ -1,5 +1,5 @@
-const env = (name) => {
+const get = (name) => {
     return process.env[name];
 };
 
-module.exports = env;
+module.exports = { get };

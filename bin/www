@@ -13,7 +13,7 @@ var env = require("../app/helpers/env.helper");
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(env("PORT") || "3000");
+var port = normalizePort(env.get("PORT") || "3000");
 app.set("port", port);
 
 /**
@@ -34,7 +34,7 @@ async function startServer() {
         server.on("error", onError);
         server.on("listening", onListening);
     } catch (error) {
-        const waitForDatabaseDelay = env("WAIT_FOR_DATABASE_DELAY") || 0;
+        const waitForDatabaseDelay = env.get("WAIT_FOR_DATABASE_DELAY") || 0;
         console.log(
             `An error has occurred while starting the server, trying again in ${waitForDatabaseDelay} milliseconds. \n Error: `,
             error

@@ -16,7 +16,7 @@ describe("create", () => {
     });
     it("should return a decodable token string", () => {
         const token = create();
-        const secret = env("AUTH_SECRET");
+        const secret = env.get("AUTH_SECRET");
         const result = jwt.verify(token, secret);
         expect(result).toBeTruthy();
     });
