@@ -7,8 +7,22 @@ describe("get", () => {
     });
 
     it("should return an environment variable value when trying to get an existent environment variable", () => {
+        const envVarName = faker.lorem.word().toUpperCase();
         const envVarValue = faker.lorem.word();
-        process.env.A_ENVIRONMENT_VARIABLE = envVarValue;
-        expect(env.get("A_ENVIRONMENT_VARIABLE")).toEqual(envVarValue);
+        process.env[envVarName] = envVarValue;
+        expect(env.get(envVarName)).toEqual(envVarValue);
+    });
+});
+
+describe("set", () => {
+    it("should be a function", () => {
+        expect(env.set).toBeInstanceOf(Function);
+    });
+
+    it("should set an enviroment variable with the name and value informed", () => {
+        const envVarName = faker.lorem.word().toUpperCase();
+        const envVarValue = faker.lorem.word();
+        env.set(envVarName, envVarValue);
+        expect(process.env[envVarName]).toEqual(envVarValue);
     });
 });

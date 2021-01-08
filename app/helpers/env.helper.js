@@ -2,4 +2,8 @@ const get = (name) => {
     return process.env[name];
 };
 
-module.exports = { get };
+const set = (name, value) => {
+    process.env[name] = value;
+};
+
+module.exports = { get, set };
