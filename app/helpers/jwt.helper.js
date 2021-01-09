@@ -6,6 +6,11 @@ const create = () => {
     return jwt.sign({}, secret);
 };
 
+const check = () => {
+    return true;
+};
+
 module.exports = {
     create,
+    check,
 };
