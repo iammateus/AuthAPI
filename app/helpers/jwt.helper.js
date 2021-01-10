@@ -6,8 +6,14 @@ const create = () => {
     return jwt.sign({}, secret);
 };
 
-const check = () => {
-    return true;
+const check = (token) => {
+    const secret = env.get("AUTH_SECRET");
+    try {
+        jwt.verify(token, secret);
+        return true;
+    } catch (error) {
+        return false;
+    }
 };
 
 module.exports = {

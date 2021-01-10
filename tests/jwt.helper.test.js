@@ -26,7 +26,16 @@ describe("check", () => {
     it("should be a function", () => {
         expect(check).toBeInstanceOf(Function);
     });
-    it("should return a boolean value of wheter the token is valid or not", () => {
-        
+    it("should return true when token is valid", () => {
+        const secret = env.get("AUTH_SECRET");
+        const token = jwt.sign({}, secret);
+        const result = check(token);
+        expect(result).toBe(true);
+    });
+    it("should return false when token is invalid", () => {
+        const invalidSecret = faker.lorem.word();
+        const invalidToken = jwt.sign({}, invalidSecret);
+        const result = check(invalidToken);
+        expect(result).toBe(false);
     });
 });
