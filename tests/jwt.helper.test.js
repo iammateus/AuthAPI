@@ -32,9 +32,14 @@ describe("check", () => {
         const result = check(token);
         expect(result).toBe(true);
     });
-    it("should return false when token is invalid", () => {
+    it("should return false when token is signed with an invalid token", () => {
         const invalidSecret = faker.lorem.word();
         const invalidToken = jwt.sign({}, invalidSecret);
+        const result = check(invalidToken);
+        expect(result).toBe(false);
+    });
+    it("should return false when token is invalid", () => {
+        const invalidToken = faker.lorem.word();
         const result = check(invalidToken);
         expect(result).toBe(false);
     });
