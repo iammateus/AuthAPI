@@ -24,7 +24,7 @@ Run a specific test
 
 ## Env
 
-The file .env.dev has all the environment variabes necessary and their values to run the application.
+The file .env.dev has all the necessary environment variabes and their values to run the application locally. It can be used as an example.
 
 ## License
 
