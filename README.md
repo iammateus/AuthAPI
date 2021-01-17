@@ -24,7 +24,7 @@ Run a specific test
 
 ## Env
 
-@todo
+The file .env.dev has all the environment variabes necessary and their values to run the application.
 
 ## License
 
