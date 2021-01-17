@@ -6,7 +6,8 @@
         "start": "nodemon ./bin/www",
         "test": "jest --no-cache --colors --collectCoverage --verbose",
         "test-watch": "jest --no-cache --colors --collectCoverage --verbose --watch",
-        "test-search": "jest --no-cache --colors --collectCoverage --verbose -t"
+        "test-search": "jest --no-cache --colors --collectCoverage --verbose -t",
+        "test-with-html-report": "jest --coverage --config='jest.html.json'"
     },
     "dependencies": {
         "@shelf/jest-mongodb": "^1.2.3",

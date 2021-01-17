@@ -1,0 +1,4 @@
+{
+    "coverageReporters": ["html"],
+    "preset": "@shelf/jest-mongodb"
+}
