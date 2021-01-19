@@ -7,6 +7,19 @@ const { mockDatabase, unmockDatabase } = require("./mocks/database.mock");
 const database = require("../app/database/database");
 const { check } = require("../app/helpers/passwordHash.helper");
 
+const createUser = async () => {
+    const data = {
+        email: faker.internet.email(),
+        name: faker.lorem.words(2),
+        password: faker.lorem.word(8),
+    };
+
+    const user = new User(data);
+    await user.save();
+
+    return data;
+};
+
 describe("/auth/register", () => {
     beforeAll(async () => {
         mockDatabase();
@@ -155,18 +168,14 @@ describe("/auth/register", () => {
         });
         expect(users.length).toEqual(1);
     });
-
-    afterAll(async () => {
-        unmockDatabase();
-        await database.disconnect();
-    });
 });
 
 describe("/auth/login", () => {
-    it("should return ok status", async () => {
+    it("should return ok status and token when user is found by credentials", async () => {
+        const user = await createUser();
         const data = {
-            email: faker.internet.email(),
-            password: faker.lorem.word(8),
+            email: user.email,
+            password: user.password,
         };
         const response = await request(app).post("/auth/login").send(data);
         expect(response.status).toEqual(StatusCodes.OK);
@@ -176,7 +185,7 @@ describe("/auth/login", () => {
         const response = await request(app).post("/auth/login");
         expect(response.status !== StatusCodes.NOT_FOUND).toBe(true);
     });
-    
+
     it("should return unprocessable entity when email is not informed", async () => {
         const response = await request(app).post("/auth/login");
         expect(response.status).toEqual(StatusCodes.UNPROCESSABLE_ENTITY);
@@ -229,5 +238,35 @@ describe("/auth/login", () => {
             type: "string.min",
             context: { label: "password", key: "password" },
         });
+    });
+
+    it("should return unprocessable entity when user email is invalid", async () => {
+        const data = {
+            email: faker.internet.email(),
+            password: faker.lorem.word(8),
+        };
+        const response = await request(app).post("/auth/login").send(data);
+        expect(response.status).toEqual(StatusCodes.UNPROCESSABLE_ENTITY);
+        expect(response.body).toMatchObject({
+            message: "email or password does not exist",
+        });
+    });
+
+    it("should return unprocessable entity when user password is invalid", async () => {
+        const user = await createUser();
+        const data = {
+            email: user.email,
+            password: faker.lorem.word(8),
+        };
+        const response = await request(app).post("/auth/login").send(data);
+        expect(response.status).toEqual(StatusCodes.UNPROCESSABLE_ENTITY);
+        expect(response.body).toMatchObject({
+            message: "email or password does not exist",
+        });
+    });
+
+    afterAll(async () => {
+        unmockDatabase();
+        await database.disconnect();
     });
 });
