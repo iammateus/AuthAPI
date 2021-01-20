@@ -4,6 +4,7 @@ const PostAuthLogin = require("../validations/PostAuthLogin");
 const User = require("../models/User");
 const { StatusCodes } = require("http-status-codes");
 const { check } = require("../helpers/passwordHash.helper");
+const jwt = require("../helpers/jwt.helper");
 
 const register = async (req, res, next) => {
     const error = await validate(req.body, PostAuthRegister, res);
@@ -41,8 +42,13 @@ const login = async (req, res, next) => {
         });
     }
 
+    const token = jwt.create();
+
     res.json({
-        message: "A message",
+        message: "User authenticated successfully",
+        data: {
+            token,
+        },
     });
 };
 

@@ -6,6 +6,7 @@ const faker = require("faker");
 const { mockDatabase, unmockDatabase } = require("./mocks/database.mock");
 const database = require("../app/database/database");
 const { check } = require("../app/helpers/passwordHash.helper");
+const jwt = require("../app/helpers/jwt.helper");
 
 const createUser = async () => {
     const data = {
@@ -179,6 +180,12 @@ describe("/auth/login", () => {
         };
         const response = await request(app).post("/auth/login").send(data);
         expect(response.status).toEqual(StatusCodes.OK);
+        expect(response.body.message).toEqual(
+            "User authenticated successfully"
+        );
+        const token = response.body.data.token;
+        console.log({ token });
+        expect(jwt.check(token)).toBe(true);
     });
 
     it("should exist", async () => {
