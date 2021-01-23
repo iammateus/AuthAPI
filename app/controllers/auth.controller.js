@@ -31,14 +31,14 @@ const login = async (req, res, next) => {
 
     if (!user) {
         return res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({
-            message: "email or password does not exist",
+            message: "Email or password does not exist",
         });
     }
 
     const isPasswordValid = await check(password, user.password);
     if (!isPasswordValid) {
         return res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({
-            message: "email or password does not exist",
+            message: "Email or password does not exist",
         });
     }
 

@@ -255,7 +255,7 @@ describe("/auth/login", () => {
         const response = await request(app).post("/auth/login").send(data);
         expect(response.status).toEqual(StatusCodes.UNPROCESSABLE_ENTITY);
         expect(response.body).toMatchObject({
-            message: "email or password does not exist",
+            message: "Email or password does not exist",
         });
     });
 
@@ -268,7 +268,7 @@ describe("/auth/login", () => {
         const response = await request(app).post("/auth/login").send(data);
         expect(response.status).toEqual(StatusCodes.UNPROCESSABLE_ENTITY);
         expect(response.body).toMatchObject({
-            message: "email or password does not exist",
+            message: "Email or password does not exist",
         });
     });
 
