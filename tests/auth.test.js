@@ -1,25 +1,13 @@
 const request = require("supertest");
 const { StatusCodes } = require("http-status-codes");
 const app = require("../index");
-const User = require("../app/models/User");
-const faker = require("faker");
 const { mockDatabase, unmockDatabase } = require("./mocks/database.mock");
 const database = require("../app/database/database");
 const { check } = require("../app/helpers/passwordHash.helper");
 const jwt = require("../app/helpers/jwt.helper");
-
-const createUser = async () => {
-    const data = {
-        email: faker.internet.email(),
-        name: faker.lorem.words(2),
-        password: faker.lorem.word(8),
-    };
-
-    const user = new User(data);
-    await user.save();
-
-    return data;
-};
+const userMock = require("./mocks/user.mock");
+const faker = require("faker");
+const User = require("../app/models/User");
 
 describe("/auth/register", () => {
     beforeAll(async () => {
@@ -173,7 +161,7 @@ describe("/auth/register", () => {
 
 describe("/auth/login", () => {
     it("should return ok status and token when user is found by credentials", async () => {
-        const user = await createUser();
+        const user = await userMock.create();
         const data = {
             email: user.email,
             password: user.password,
@@ -260,11 +248,13 @@ describe("/auth/login", () => {
     });
 
     it("should return unprocessable entity when user password is invalid", async () => {
-        const user = await createUser();
+        const userData = await userMock.create();
+
         const data = {
-            email: user.email,
-            password: faker.lorem.word(8),
+            email: userData.email,
+            password: faker.lorem.word(9),
         };
+
         const response = await request(app).post("/auth/login").send(data);
         expect(response.status).toEqual(StatusCodes.UNPROCESSABLE_ENTITY);
         expect(response.body).toMatchObject({
