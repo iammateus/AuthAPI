@@ -7,6 +7,7 @@ describe("controller:validate", () => {
     it("should be a function", () => {
         expect(controller.validate).toBeInstanceOf(Function);
     });
+
     it("should validate joySchema with the given data", () => {
         validator.validate = jest.fn();
         const data = {};
@@ -22,6 +23,7 @@ describe("controller:validate", () => {
             mokedJoySchema
         );
     });
+    
     it("should return response if validation fails", async () => {
         validator.validate.mockImplementationOnce(async () => {
             throw {

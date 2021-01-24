@@ -10,6 +10,7 @@ describe("PostAuthRegister:hash", () => {
     it("should be a function", () => {
         expect(hash).toBeInstanceOf(Function);
     });
+
     it("should return a hashed password", async () => {
         const password = faker.lorem.word();
         const hashed = await hash(password);
@@ -24,6 +25,7 @@ describe("PostAuthRegister:check", () => {
     it("should be a function", () => {
         expect(check).toBeInstanceOf(Function);
     });
+
     it("should return true if password matches hash", async () => {
         const password = faker.lorem.word();
         const hashed = await bcrypt.hash(password, saltRounds);
@@ -31,6 +33,7 @@ describe("PostAuthRegister:check", () => {
         const checked = await check(password, hashed);
         expect(checked).toBe(true);
     });
+    
     it("should return false if password matches hash", async () => {
         const password = faker.lorem.word();
         const otherPassword = faker.lorem.word();
