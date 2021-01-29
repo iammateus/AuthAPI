@@ -7,21 +7,28 @@ describe("create", () => {
     beforeAll(() => {
         env.set("AUTH_SECRET", faker.lorem.word());
     });
-    
+
     it("should be a function", () => {
         expect(create).toBeInstanceOf(Function);
     });
 
     it("should return an string", () => {
-        const token = create();
+        const content = {
+            [faker.lorem.word()]: faker.lorem.word(),
+        };
+        const token = create(content);
         expect(typeof token === "string").toBe(true);
     });
 
-    it("should return a decodable token string", () => {
-        const token = create();
+    it("should return a decodable token string containing the informed content", () => {
+        const content = {
+            [faker.lorem.word()]: faker.lorem.word(),
+        };
+        const token = create(content);
         const secret = env.get("AUTH_SECRET");
         const result = jwt.verify(token, secret);
         expect(result).toBeTruthy();
+        expect(result).toMatchObject(content);
     });
 });
 

@@ -1,9 +1,9 @@
 const jwt = require("jsonwebtoken");
 const env = require("../helpers/env.helper");
 
-const create = () => {
+const create = (content) => {
     const secret = env.get("AUTH_SECRET");
-    return jwt.sign({}, secret);
+    return jwt.sign(content, secret);
 };
 
 const check = (token) => {
