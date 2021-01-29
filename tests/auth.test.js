@@ -171,8 +171,7 @@ describe("/auth/login", () => {
         expect(response.body.message).toEqual(
             "User authenticated successfully"
         );
-        const token = response.body.data.token;
-        console.log({ token });
+        const { token } = response.body.data;
         expect(jwt.check(token)).toBe(true);
     });
 
