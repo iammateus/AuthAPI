@@ -42,7 +42,7 @@ const login = async (req, res, next) => {
         });
     }
 
-    const token = jwt.create();
+    const token = jwt.create({});
 
     res.json({
         message: "User authenticated successfully",
