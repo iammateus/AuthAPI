@@ -9,8 +9,7 @@ const create = (content) => {
 const check = (token) => {
     const secret = env.get("AUTH_SECRET");
     try {
-        jwt.verify(token, secret);
-        return true;
+        return jwt.verify(token, secret);
     } catch (error) {
         return false;
     }

@@ -172,7 +172,7 @@ describe("/auth/login", () => {
             "User authenticated successfully"
         );
         const { token } = response.body.data;
-        expect(jwt.check(token)).toBe(true);
+        expect(jwt.check(token)).toBeTruthy();
     });
 
     it("should exist", async () => {
