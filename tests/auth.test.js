@@ -161,10 +161,10 @@ describe("/auth/register", () => {
 
 describe("/auth/login", () => {
     it("should return ok status and token when user is found by credentials", async () => {
-        const user = await userMock.create();
+        const userData = await userMock.create();
         const data = {
-            email: user.email,
-            password: user.password,
+            email: userData.email,
+            password: userData.password,
         };
         const response = await request(app).post("/auth/login").send(data);
         expect(response.status).toEqual(StatusCodes.OK);
@@ -172,7 +172,13 @@ describe("/auth/login", () => {
             "User authenticated successfully"
         );
         const { token } = response.body.data;
-        expect(jwt.check(token)).toBeTruthy();
+        const decodedToken = jwt.check(token);
+        expect(decodedToken).toBeTruthy();
+
+        expect(decodedToken.id).toBeTruthy();
+
+        const userRecord = await User.findOne({ email: userData.email });
+        expect(String(decodedToken.id)).toEqual(String(userRecord._id));
     });
 
     it("should exist", async () => {
