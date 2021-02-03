@@ -172,11 +172,20 @@ describe("/auth/login", () => {
             "User authenticated successfully"
         );
         const { token } = response.body.data;
+        expect(jwt.check(token)).toBeTruthy();
+    });
+
+    it("should return token with user id when user is authenticated successfully", async () => {
+        const userData = await userMock.create();
+        const data = {
+            email: userData.email,
+            password: userData.password,
+        };
+        const response = await request(app).post("/auth/login").send(data);
+        const { token } = response.body.data;
         const decodedToken = jwt.check(token);
-        expect(decodedToken).toBeTruthy();
 
         expect(decodedToken.id).toBeTruthy();
-
         const userRecord = await User.findOne({ email: userData.email });
         expect(String(decodedToken.id)).toEqual(String(userRecord._id));
     });
