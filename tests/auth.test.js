@@ -161,10 +161,10 @@ describe("/auth/register", () => {
 
 describe("/auth/login", () => {
     it("should return ok status and token when user is found by credentials", async () => {
-        const userData = await userMock.create();
+        const { user, password } = await userMock.create();
         const data = {
-            email: userData.email,
-            password: userData.password,
+            email: user.email,
+            password: password,
         };
         const response = await request(app).post("/auth/login").send(data);
         expect(response.status).toEqual(StatusCodes.OK);
@@ -176,18 +176,17 @@ describe("/auth/login", () => {
     });
 
     it("should return token with user id when user is authenticated successfully", async () => {
-        const userData = await userMock.create();
+        const { user, password } = await userMock.create();
         const data = {
-            email: userData.email,
-            password: userData.password,
+            email: user.email,
+            password: password,
         };
         const response = await request(app).post("/auth/login").send(data);
         const { token } = response.body.data;
         const decodedToken = jwt.check(token);
 
         expect(decodedToken.id).toBeTruthy();
-        const userRecord = await User.findOne({ email: userData.email });
-        expect(String(decodedToken.id)).toEqual(String(userRecord._id));
+        expect(String(decodedToken.id)).toEqual(String(user._id));
     });
 
     it("should exist", async () => {
@@ -262,10 +261,10 @@ describe("/auth/login", () => {
     });
 
     it("should return unprocessable entity when user password is invalid", async () => {
-        const userData = await userMock.create();
+        const { user } = await userMock.create();
 
         const data = {
-            email: userData.email,
+            email: user.email,
             password: faker.lorem.word(9),
         };
 

@@ -11,7 +11,7 @@ const create = async () => {
     const user = new User(data);
     await user.save();
 
-    return data;
+    return { user, password: data.password };
 };
 
 module.exports = {
