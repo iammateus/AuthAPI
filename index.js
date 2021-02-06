@@ -24,7 +24,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
-app.use("/", authRouter);
+app.use("/auth", authRouter);
 
 // 404 handler
 app.use(function (req, res, next) {
