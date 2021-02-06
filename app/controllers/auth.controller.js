@@ -27,7 +27,6 @@ const login = async (req, res, next) => {
 
     const { email, password } = req.body;
     const user = await User.findOne({ email });
-
     if (!user) {
         return res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({
             message: "Email or password does not exist",

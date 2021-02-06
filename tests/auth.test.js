@@ -262,7 +262,6 @@ describe("/auth/login", () => {
 
     it("should return unprocessable entity when user password is invalid", async () => {
         const { user } = await userMock.create();
-
         const data = {
             email: user.email,
             password: faker.lorem.word(9),
