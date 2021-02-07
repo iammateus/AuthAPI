@@ -12,8 +12,7 @@ const path = require("path");
 const logger = require("morgan");
 const express = require("express");
 const cookieParser = require("cookie-parser");
-const indexRouter = require("./app/routes/index");
-const authRouter = require("./app/routes/auth");
+const publicRouter = require("./app/routes/public");
 
 const app = express();
 
@@ -23,8 +22,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/", indexRouter);
-app.use("/auth", authRouter);
+app.use("/", publicRouter);
 
 // 404 handler
 app.use(function (req, res, next) {
