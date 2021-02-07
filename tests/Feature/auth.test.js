@@ -1,13 +1,13 @@
 const request = require("supertest");
 const { StatusCodes } = require("http-status-codes");
-const app = require("../index");
-const { mockDatabase, unmockDatabase } = require("./mocks/database.mock");
-const database = require("../app/database/database");
-const { check } = require("../app/helpers/passwordHash.helper");
-const jwt = require("../app/helpers/jwt.helper");
-const userMock = require("./mocks/user.mock");
+const app = require("../../index");
+const { mockDatabase, unmockDatabase } = require("../_mocks/database.mock");
+const database = require("../../app/database/database");
+const { check } = require("../../app/helpers/passwordHash.helper");
+const jwt = require("../../app/helpers/jwt.helper");
+const userMock = require("../_mocks/user.mock");
 const faker = require("faker");
-const User = require("../app/models/User");
+const User = require("../../app/models/User");
 
 describe("/auth/register", () => {
     beforeAll(async () => {
@@ -15,7 +15,12 @@ describe("/auth/register", () => {
         await database.connect();
     });
 
-    it("should register user", async () => {
+    it("should exists", async () => {
+        const response = await request(app).post("/auth/register");
+        expect(response.status !== StatusCodes.NOT_FOUND).toBe(true);
+    });
+
+    it("should register user and return created status code when user data is valid", async () => {
         const pass = faker.lorem.word(8);
         const data = {
             email: faker.internet.email(),
@@ -37,11 +42,6 @@ describe("/auth/register", () => {
             user.password
         );
         expect(savedHashMatchesInformedPass).toBe(true);
-    });
-
-    it("should exists", async () => {
-        const response = await request(app).post("/auth/register");
-        expect(response.status !== StatusCodes.NOT_FOUND).toBe(true);
     });
 
     it("should return unprocessable entity when email is not informed", async () => {
@@ -160,7 +160,12 @@ describe("/auth/register", () => {
 });
 
 describe("/auth/login", () => {
-    it("should return ok status and token when user is found by credentials", async () => {
+    it("should exist", async () => {
+        const response = await request(app).post("/auth/login");
+        expect(response.status !== StatusCodes.NOT_FOUND).toBe(true);
+    });
+
+    it("should return ok status and token when user is authenticated successfully", async () => {
         const { user, password } = await userMock.create();
         const data = {
             email: user.email,
@@ -187,11 +192,6 @@ describe("/auth/login", () => {
 
         expect(decodedToken.id).toBeTruthy();
         expect(String(decodedToken.id)).toEqual(String(user._id));
-    });
-
-    it("should exist", async () => {
-        const response = await request(app).post("/auth/login");
-        expect(response.status !== StatusCodes.NOT_FOUND).toBe(true);
     });
 
     it("should return unprocessable entity when email is not informed", async () => {

@@ -1,6 +1,6 @@
-const { create, check } = require("../app/helpers/jwt.helper");
+const { create, check } = require("../../app/helpers/jwt.helper");
 const jwt = require("jsonwebtoken");
-const env = require("../app/helpers/env.helper");
+const env = require("../../app/helpers/env.helper");
 const faker = require("faker");
 
 describe("create", () => {

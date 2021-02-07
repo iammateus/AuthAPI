@@ -1,4 +1,4 @@
-const env = require("../app/helpers/env.helper");
+const env = require("../../app/helpers/env.helper");
 const faker = require("faker");
 
 describe("get", () => {

@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
-const status = require("../app/database/states");
-const { connect, disconnect } = require("../app/database/database");
+const status = require("../../app/database/states");
+const { connect, disconnect } = require("../../app/database/database");
 const {
     mockDatabaseConfig,
     unmockDatabaseConfig,
-} = require("./mocks/databaseConfig.mock");
+} = require("../_mocks/databaseConfig.mock");
 
 describe("database:connect", () => {
     beforeAll(() => {
@@ -15,12 +15,12 @@ describe("database:connect", () => {
         expect(connect).toBeInstanceOf(Function);
     });
 
-    it("should create mongo connection", async () => {
+    it("should open mongo connection", async () => {
         await connect();
         expect(mongoose.connection.readyState).toEqual(status.CONNECTED);
     });
 
-    it("should return undefined and not try to connect again", async () => {
+    it("should return undefined and not try to connect again when connection is open already", async () => {
         jest.spyOn(mongoose, "connect");
         mongoose.connect = jest.fn();
         const result = await connect();
@@ -34,7 +34,7 @@ describe("database:disconnect", () => {
         expect(disconnect).toBeInstanceOf(Function);
     });
 
-    it("should create mongo connection", async () => {
+    it("should disconnect mongo connection", async () => {
         // The connection is opened by the test of connection above
         await disconnect();
         expect(mongoose.connection.readyState).toEqual(status.DISCONNECTED);

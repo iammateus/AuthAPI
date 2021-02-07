@@ -1,7 +1,7 @@
 const faker = require("faker");
-const User = require("../app/models/User");
-const database = require("../app/database/database");
-const { mockDatabase, unmockDatabase } = require("./mocks/database.mock");
+const User = require("../../app/models/User");
+const database = require("../../app/database/database");
+const { mockDatabase, unmockDatabase } = require("../_mocks/database.mock");
 
 describe("User", () => {
     beforeAll(async () => {

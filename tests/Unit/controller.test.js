@@ -1,6 +1,6 @@
-const controller = require("../app/controllers/controller");
-const validator = require("../app/validations/validator");
-jest.mock("../app/validations/validator");
+const controller = require("../../app/controllers/controller");
+const validator = require("../../app/validations/validator");
+jest.mock("../../app/validations/validator");
 const { StatusCodes } = require("http-status-codes");
 
 describe("controller:validate", () => {
@@ -23,8 +23,8 @@ describe("controller:validate", () => {
             mokedJoySchema
         );
     });
-    
-    it("should return response if validation fails", async () => {
+
+    it("should send error response and error object to res param when validation fails", async () => {
         validator.validate.mockImplementationOnce(async () => {
             throw {
                 message: "Error",
@@ -32,11 +32,7 @@ describe("controller:validate", () => {
         });
         const json = jest.fn();
         const res = {
-            status: jest.fn().mockImplementationOnce(() => {
-                return {
-                    json,
-                };
-            }),
+            status: jest.fn().mockReturnValueOnce({ json }),
         };
 
         await controller.validate({}, {}, res);

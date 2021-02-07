@@ -1,4 +1,4 @@
-const validator = require("../app/validations/validator");
+const validator = require("../../app/validations/validator");
 const Joi = require("joi");
 
 const getJoiSchema = () => {

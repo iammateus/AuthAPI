@@ -1,5 +1,5 @@
-const databaseConfig = require("../app/database/databaseConfig");
-const env = require("../app/helpers/env.helper");
+const databaseConfig = require("../../app/database/databaseConfig");
+const env = require("../../app/helpers/env.helper");
 
 describe("databaseConfig:getDatabaseUri", () => {
     it("should be a function", () => {
