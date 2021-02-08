@@ -6,12 +6,12 @@ const {
 const faker = require("faker");
 const bcrypt = require("bcrypt");
 
-describe("PostAuthRegister:hash", () => {
+describe("hash", () => {
     it("should be a function", () => {
         expect(hash).toBeInstanceOf(Function);
     });
 
-    it("should return a hashed password", async () => {
+    it("should return a password hash", async () => {
         const password = faker.lorem.word();
         const hashed = await hash(password);
         expect(typeof hashed).toEqual("string");
@@ -21,7 +21,7 @@ describe("PostAuthRegister:hash", () => {
     });
 });
 
-describe("PostAuthRegister:check", () => {
+describe("check", () => {
     it("should be a function", () => {
         expect(check).toBeInstanceOf(Function);
     });

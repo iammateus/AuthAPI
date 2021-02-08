@@ -20,7 +20,7 @@ describe("create", () => {
         expect(typeof token === "string").toBe(true);
     });
 
-    it("should return a decodable token string containing the informed content", () => {
+    it("should return a decodable jwt string containing the informed content", () => {
         const content = {
             [faker.lorem.word()]: faker.lorem.word(),
         };
@@ -47,14 +47,14 @@ describe("check", () => {
         expect(result).toMatchObject(content);
     });
 
-    it("should return false when token is signed with an invalid token", () => {
+    it("should return false when jwt is signed with an invalid secret", () => {
         const invalidSecret = faker.lorem.word();
         const invalidToken = jwt.sign({}, invalidSecret);
         const result = check(invalidToken);
         expect(result).toBe(false);
     });
 
-    it("should return false when token is invalid", () => {
+    it("should return false when jwt is invalid", () => {
         const invalidToken = faker.lorem.word();
         const result = check(invalidToken);
         expect(result).toBe(false);

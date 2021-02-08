@@ -1,7 +1,7 @@
 const databaseConfig = require("../../app/database/databaseConfig");
 const env = require("../../app/helpers/env.helper");
 
-describe("databaseConfig:getDatabaseUri", () => {
+describe("getDatabaseUri", () => {
     it("should be a function", () => {
         expect(databaseConfig.getDatabaseUri).toBeInstanceOf(Function);
     });
@@ -13,6 +13,14 @@ describe("databaseConfig:getDatabaseUri", () => {
         const uri = "mongodb://" + host + ":" + port + "/" + name;
         const result = databaseConfig.getDatabaseUri();
         expect(result).toEqual(uri);
+    });
+});
+
+describe("getDatabaseConnectionOptions", () => {
+    it("should be a function", () => {
+        expect(databaseConfig.getDatabaseConnectionOptions).toBeInstanceOf(
+            Function
+        );
     });
 
     it("should return mongo connection options", () => {

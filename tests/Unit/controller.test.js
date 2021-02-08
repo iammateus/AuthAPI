@@ -3,12 +3,12 @@ const validator = require("../../app/validations/validator");
 jest.mock("../../app/validations/validator");
 const { StatusCodes } = require("http-status-codes");
 
-describe("controller:validate", () => {
+describe("validate", () => {
     it("should be a function", () => {
         expect(controller.validate).toBeInstanceOf(Function);
     });
 
-    it("should validate joySchema with the given data", () => {
+    it("should validate joySchema with the received data", () => {
         validator.validate = jest.fn();
         const data = {};
         const mokedJoySchema = { validateAsync: jest.fn() };

@@ -21,6 +21,8 @@ describe("User", () => {
         expect(user.updatedAt).toBeTruthy();
     });
 
+    //@TODO: tests auto password hashing
+
     afterAll(async () => {
         unmockDatabase();
         await database.disconnect();
