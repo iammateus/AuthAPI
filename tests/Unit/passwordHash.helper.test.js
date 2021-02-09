@@ -1,8 +1,4 @@
-const {
-    hash,
-    check,
-    saltRounds,
-} = require("../../app/helpers/passwordHash.helper");
+const { hash, check } = require("../../app/helpers/passwordHash.helper");
 const faker = require("faker");
 const bcrypt = require("bcrypt");
 
@@ -28,7 +24,7 @@ describe("check", () => {
 
     it("should return true when password matches the hash", async () => {
         const password = faker.lorem.word();
-        const hashed = await bcrypt.hash(password, saltRounds);
+        const hashed = await bcrypt.hash(password, 10);
 
         const checked = await check(password, hashed);
         expect(checked).toBe(true);
@@ -37,7 +33,7 @@ describe("check", () => {
     it("should return false when password doesn't matches the hash", async () => {
         const password = faker.lorem.word();
         const otherPassword = faker.lorem.word();
-        const hashed = await bcrypt.hash(password, saltRounds);
+        const hashed = await bcrypt.hash(password, 10);
 
         const checked = await check(otherPassword, hashed);
         expect(checked).toBe(false);
