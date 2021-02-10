@@ -16,4 +16,8 @@ const create = async (req, res, next) => {
     });
 };
 
-module.exports = { create };
+const me = (req, res, next) => {
+    res.json({});
+};
+
+module.exports = { create, me };

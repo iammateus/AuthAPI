@@ -162,9 +162,9 @@ describe("/users", () => {
     });
 });
 
-/* describe("/users/me", () => {
+describe("/users/me", () => {
     it("should exist", async () => {
         const response = await request(app).post("/users/me");
         expect(response.status !== StatusCodes.NOT_FOUND).toBe(true);
     });
-}); */
+});
