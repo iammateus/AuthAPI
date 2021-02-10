@@ -39,4 +39,8 @@ describe("disconnect", () => {
         await disconnect();
         expect(mongoose.connection.readyState).toEqual(status.DISCONNECTED);
     });
+
+    afterAll(() => {
+        unmockDatabaseConfig();
+    });
 });

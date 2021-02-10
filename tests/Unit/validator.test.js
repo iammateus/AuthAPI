@@ -13,7 +13,7 @@ describe("validate", () => {
         expect(validator.validate).toBeInstanceOf(Function);
     });
 
-    it("should execute method validateAsync of the joy schema param with the received data", async () => {
+    it("should execute method validateAsync of the joySchema param with the received data", async () => {
         const data = {};
         const mokedSchema = { validateAsync: jest.fn() };
         await validator.validate(data, mokedSchema);

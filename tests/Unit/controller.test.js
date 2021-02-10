@@ -24,7 +24,7 @@ describe("validate", () => {
         );
     });
 
-    it("should send error response and error object to res param when validation fails", async () => {
+    it("should send unprocessable entity response code and error object to res param when validation fails", async () => {
         validator.validate.mockImplementationOnce(async () => {
             throw {
                 message: "Error",
