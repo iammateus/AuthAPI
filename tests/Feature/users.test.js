@@ -1,11 +1,12 @@
 const request = require("supertest");
-const { StatusCodes } = require("http-status-codes");
+const { StatusCodes, ReasonPhrases } = require("http-status-codes");
 const app = require("../../index");
 const { mockDatabase, unmockDatabase } = require("../_mocks/database.mock");
 const database = require("../../app/database/database");
 const { check } = require("../../app/helpers/passwordHash.helper");
 const faker = require("faker");
 const User = require("../../app/models/User");
+const jwtHelper = require("../../app/helpers/jwt.helper");
 
 describe("/users", () => {
     beforeAll(async () => {
@@ -166,5 +167,34 @@ describe("/users/me", () => {
     it("should exist", async () => {
         const response = await request(app).post("/users/me");
         expect(response.status !== StatusCodes.NOT_FOUND).toBe(true);
+        console.log(response.body);
+    });
+
+    it("should be a private route and return unathorized when token not informed", async () => {
+        const response = await request(app).post("/users/me");
+        expect(response.status).toEqual(StatusCodes.UNAUTHORIZED);
+        expect(response.body).toMatchObject({
+            message: ReasonPhrases.UNAUTHORIZED,
+        });
+    });
+
+    it("should be a private route and return unauthorized when token is invalid", async () => {
+        const header = {
+            Authorization: "Bearer " + faker.lorem.text(),
+        };
+        const response = await request(app).post("/users/me").set(header);
+        expect(response.status).toEqual(StatusCodes.UNAUTHORIZED);
+        expect(response.body).toMatchObject({
+            message: ReasonPhrases.UNAUTHORIZED,
+        });
+    });
+
+    it("should authenticate user when token is valid", async () => {
+        const token = jwtHelper.create({});
+        const header = {
+            Authorization: "Bearer " + token,
+        };
+        const response = await request(app).post("/users/me").set(header);
+        expect(response.status).toEqual(StatusCodes.OK);
     });
 });
