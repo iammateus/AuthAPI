@@ -188,6 +188,18 @@ describe("/users/me", () => {
         });
     });
 
+    it("should be a private route and return unauthorized when token is malformed", async () => {
+        const token = jwtHelper.create({});
+        const header = {
+            Authorization: token,
+        };
+        const response = await request(app).post("/users/me").set(header);
+        expect(response.status).toEqual(StatusCodes.UNAUTHORIZED);
+        expect(response.body).toMatchObject({
+            message: ReasonPhrases.UNAUTHORIZED,
+        });
+    });
+
     it("should authenticate user when token is valid", async () => {
         const token = jwtHelper.create({});
         const header = {
