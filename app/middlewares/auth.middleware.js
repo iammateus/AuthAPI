@@ -3,19 +3,23 @@ const { StatusCodes, ReasonPhrases } = require("http-status-codes");
 
 const auth = (req, res, next) => {
     const token = getAuthorizationBearerToken(req);
-    if (!jwtHelper.check(token)) {
-        return res.status(StatusCodes.UNAUTHORIZED).json({
-            message: ReasonPhrases.UNAUTHORIZED,
-        });
+    if (jwtHelper.check(token)) {
+        return next();
     }
-    next();
+    res.status(StatusCodes.UNAUTHORIZED).json({
+        message: ReasonPhrases.UNAUTHORIZED,
+    });
 };
 
 const getAuthorizationBearerToken = (req) => {
     const header = req.header("Authorization");
-    if (header) {
+    if (header && hasBearerToken(header)) {
         return header.replace("Bearer ", "");
     }
+};
+
+const hasBearerToken = (header) => {
+    return header.includes("Bearer ");
 };
 
 module.exports = auth;

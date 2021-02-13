@@ -167,7 +167,6 @@ describe("/users/me", () => {
     it("should exist", async () => {
         const response = await request(app).post("/users/me");
         expect(response.status !== StatusCodes.NOT_FOUND).toBe(true);
-        console.log(response.body);
     });
 
     it("should be a private route and return unathorized when token not informed", async () => {
@@ -195,6 +194,6 @@ describe("/users/me", () => {
             Authorization: "Bearer " + token,
         };
         const response = await request(app).post("/users/me").set(header);
-        expect(response.status).toEqual(StatusCodes.OK);
+        expect(response.status !== ReasonPhrases.UNAUTHORIZED).toBe(true);
     });
 });
