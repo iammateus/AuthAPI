@@ -1,7 +1,7 @@
 const jwtHelper = require("../helpers/jwt.helper");
 const { StatusCodes, ReasonPhrases } = require("http-status-codes");
 
-const auth = (req, res, next) => {
+const authMiddleware = (req, res, next) => {
     const token = getAuthorizationBearerToken(req);
     if (jwtHelper.check(token)) {
         return next();
@@ -22,4 +22,4 @@ const hasBearerToken = (header) => {
     return header.includes("Bearer ");
 };
 
-module.exports = auth;
+module.exports = authMiddleware;
