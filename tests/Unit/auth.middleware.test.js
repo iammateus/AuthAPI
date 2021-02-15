@@ -51,13 +51,4 @@ describe("authMiddleware", () => {
         });
     });
 
-    it("should authenticate user when token is valid", async () => {
-        const token = jwtHelper.create({});
-        const header = {
-            Authorization: "Bearer " + token,
-        };
-        const response = await request(app).post("/users/me").set(header);
-        expect(response.status !== ReasonPhrases.UNAUTHORIZED).toBe(true);
-    });
-});
  */
