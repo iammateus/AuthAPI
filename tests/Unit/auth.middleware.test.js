@@ -18,7 +18,7 @@ describe("authMiddleware", () => {
         expect(authMiddleware).to.be.a.instanceof(Function);
     });
 
-    it("should call next and return when bearer token is valid", () => {
+    it("should call next and return next result when bearer token is valid", () => {
         const req = { header: mockValidBearerToken };
         const nextReturnValue = {
             [faker.lorem.word()]: faker.lorem.word(),
@@ -29,6 +29,20 @@ describe("authMiddleware", () => {
 
         expect(next.mock.calls.length).to.equal(1);
         expect(result).to.equal(nextReturnValue);
+    });
+
+    it("should return unathorized when bearer token is not informed", () => {
+        const req = { header: () => null };
+        const res = {};
+        res.status = jest.fn().mockReturnValue(res);
+        res.json = jest.fn().mockReturnValue(res);
+
+        const next = jest.fn();
+
+        authMiddleware(req, res, next);
+
+        expect(res.status.mock);
+        expect(res.status.mock.calls.length).to.equal(1);
     });
 });
 
