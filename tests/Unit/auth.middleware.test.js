@@ -1,8 +1,9 @@
 const authMiddleware = require("../../app/middlewares/auth.middleware");
+const { StatusCodes, ReasonPhrases } = require("http-status-codes");
 const jwtHelper = require("../../app/helpers/jwt.helper");
+const env = require("../../app/helpers/env.helper");
 const expect = require("chai").expect;
 const faker = require("faker");
-const env = require("../../app/helpers/env.helper");
 
 const mockValidBearerToken = () => {
     const token = jwtHelper.create({});
@@ -28,7 +29,7 @@ describe("authMiddleware", () => {
         const result = authMiddleware(req, {}, next);
 
         expect(next.mock.calls.length).to.equal(1);
-        expect(result).to.equal(nextReturnValue);
+        expect(result).to.deep.equal(nextReturnValue);
     });
 
     it("should return unathorized when bearer token is not informed", () => {
@@ -41,20 +42,19 @@ describe("authMiddleware", () => {
 
         authMiddleware(req, res, next);
 
-        expect(res.status.mock);
         expect(res.status.mock.calls.length).to.equal(1);
-    });
-});
+        expect(res.status.mock.calls[0][0]).to.equal(StatusCodes.UNAUTHORIZED);
 
-/*   it("should be a private route and return unathorized when token not informed", async () => {
-        const response = await request(app).post("/users/me");
-        expect(response.status).toEqual(StatusCodes.UNAUTHORIZED);
-        expect(response.body).toMatchObject({
+        expect(res.json.mock.calls.length).to.equal(1);
+        expect(res.json.mock.calls[0][0]).to.deep.equal({
             message: ReasonPhrases.UNAUTHORIZED,
         });
     });
+});
 
-    it("should be a private route and return unauthorized when token is invalid", async () => {
+/*   
+
+    it("unauthorized when token is invalid", async () => {
         const header = {
             Authorization: "Bearer " + faker.lorem.text(),
         };
