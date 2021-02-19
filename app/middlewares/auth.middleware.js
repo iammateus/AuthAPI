@@ -13,13 +13,13 @@ const authMiddleware = (req, res, next) => {
 
 const getAuthorizationBearerToken = (req) => {
     const header = req.header("Authorization");
-    if (header && hasBearerToken(header)) {
+    if (header && startsWithBearer(header)) {
         return header.replace("Bearer ", "");
     }
 };
 
-const hasBearerToken = (header) => {
-    return header.includes("Bearer ");
+const startsWithBearer = (header) => {
+    return "Bearer " === header.substring(0, 7);
 };
 
 module.exports = authMiddleware;

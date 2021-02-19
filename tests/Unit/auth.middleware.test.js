@@ -50,19 +50,50 @@ describe("authMiddleware", () => {
             message: ReasonPhrases.UNAUTHORIZED,
         });
     });
-});
 
-/*   
-
-    it("unauthorized when token is invalid", async () => {
-        const header = {
-            Authorization: "Bearer " + faker.lorem.text(),
+    it("should return unathorized when bearer token doesn't start with 'Bearer '", () => {
+        const req = {
+            header: () => {
+                return jwtHelper.create({});
+            },
         };
-        const response = await request(app).post("/users/me").set(header);
-        expect(response.status).toEqual(StatusCodes.UNAUTHORIZED);
-        expect(response.body).toMatchObject({
+        const res = {};
+        res.status = jest.fn().mockReturnValue(res);
+        res.json = jest.fn().mockReturnValue(res);
+
+        const next = jest.fn();
+
+        authMiddleware(req, res, next);
+
+        expect(res.status.mock.calls.length).to.equal(1);
+        expect(res.status.mock.calls[0][0]).to.equal(StatusCodes.UNAUTHORIZED);
+
+        expect(res.json.mock.calls.length).to.equal(1);
+        expect(res.json.mock.calls[0][0]).to.deep.equal({
             message: ReasonPhrases.UNAUTHORIZED,
         });
     });
 
- */
+    it("should return unathorized when bearer token starts with 'Bearer ' but doesn't has a valid body", () => {
+        const req = {
+            header: () => {
+                return "Bearer " + faker.lorem.text();
+            },
+        };
+        const res = {};
+        res.status = jest.fn().mockReturnValue(res);
+        res.json = jest.fn().mockReturnValue(res);
+
+        const next = jest.fn();
+
+        authMiddleware(req, res, next);
+
+        expect(res.status.mock.calls.length).to.equal(1);
+        expect(res.status.mock.calls[0][0]).to.equal(StatusCodes.UNAUTHORIZED);
+
+        expect(res.json.mock.calls.length).to.equal(1);
+        expect(res.json.mock.calls[0][0]).to.deep.equal({
+            message: ReasonPhrases.UNAUTHORIZED,
+        });
+    });
+});
