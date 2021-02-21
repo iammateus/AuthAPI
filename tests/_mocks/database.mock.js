@@ -4,18 +4,14 @@ const {
     unmockDatabaseConfig,
 } = require("./databaseConfig.mock");
 
-const disconnect = () => {};
-
-const mockDatabase = () => {
+const mockDatabaseAndConnect = async () => {
     mockDatabaseConfig();
-
-    jest.spyOn(database, "disconnect");
-    database.disconnect.mockImplementation(disconnect);
+    await database.connect();
 };
 
-const unmockDatabase = () => {
+const unmockDatabaseAndDisconnect = async () => {
     unmockDatabaseConfig();
-    database.disconnect.mockRestore();
+    await database.disconnect();
 };
 
-module.exports = { mockDatabase, unmockDatabase };
+module.exports = { mockDatabaseAndConnect, unmockDatabaseAndDisconnect };

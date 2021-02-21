@@ -4,23 +4,25 @@ const jwtHelper = require("../../app/helpers/jwt.helper");
 const env = require("../../app/helpers/env.helper");
 const expect = require("chai").expect;
 const faker = require("faker");
-
-const mockValidBearerToken = () => {
-    const token = jwtHelper.create({});
-    return "Bearer " + token;
-};
+const authMock = require("../_mocks/auth.mock");
+const {
+    mockDatabaseAndConnect,
+    unmockDatabaseAndDisconnect,
+} = require("../_mocks/database.mock");
 
 describe("authMiddleware", () => {
-    beforeAll(() => {
+    beforeAll(async () => {
         env.set("AUTH_SECRET", faker.lorem.word());
+        await mockDatabaseAndConnect();
     });
 
     it("should be a function", () => {
         expect(authMiddleware).to.be.a.instanceof(Function);
     });
 
-    it("should call next and return next result when bearer token is valid", () => {
-        const req = { header: mockValidBearerToken };
+    it("should call next and return next result when bearer token is valid", async () => {
+        const validBearerToken = await authMock.mockValidBearerToken();
+        const req = { header: () => validBearerToken };
         const nextReturnValue = {
             [faker.lorem.word()]: faker.lorem.word(),
         };
@@ -30,6 +32,26 @@ describe("authMiddleware", () => {
 
         expect(next.mock.calls.length).to.equal(1);
         expect(result).to.deep.equal(nextReturnValue);
+    });
+
+    it("should return unathorized when bearer token doesn't have id", async () => {
+        const invalidBearerToken = await authMock.mockBearerToken();
+        const req = { header: () => invalidBearerToken };
+        const res = {};
+        res.status = jest.fn().mockReturnValue(res);
+        res.json = jest.fn().mockReturnValue(res);
+
+        const next = jest.fn();
+
+        authMiddleware(req, res, next);
+
+        expect(res.status.mock.calls.length).to.equal(1);
+        expect(res.status.mock.calls[0][0]).to.equal(StatusCodes.UNAUTHORIZED);
+
+        expect(res.json.mock.calls.length).to.equal(1);
+        expect(res.json.mock.calls[0][0]).to.deep.equal({
+            message: ReasonPhrases.UNAUTHORIZED,
+        });
     });
 
     it("should return unathorized when bearer token is not informed", () => {
@@ -95,5 +117,9 @@ describe("authMiddleware", () => {
         expect(res.json.mock.calls[0][0]).to.deep.equal({
             message: ReasonPhrases.UNAUTHORIZED,
         });
+    });
+
+    afterAll(async () => {
+        await unmockDatabaseAndDisconnect();
     });
 });

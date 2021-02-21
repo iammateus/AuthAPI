@@ -1,17 +1,17 @@
 const request = require("supertest");
 const { StatusCodes, ReasonPhrases } = require("http-status-codes");
 const app = require("../../index");
-const { mockDatabase, unmockDatabase } = require("../_mocks/database.mock");
-const database = require("../../app/database/database");
+const {
+    mockDatabaseAndConnect,
+    unmockDatabaseAndDisconnect,
+} = require("../_mocks/database.mock");
 const { check } = require("../../app/helpers/passwordHash.helper");
 const faker = require("faker");
 const User = require("../../app/models/User");
-const jwtHelper = require("../../app/helpers/jwt.helper");
 
 describe("/users", () => {
     beforeAll(async () => {
-        mockDatabase();
-        await database.connect();
+        await mockDatabaseAndConnect();
     });
 
     it("should exist", async () => {
@@ -158,8 +158,7 @@ describe("/users", () => {
     });
 
     afterAll(async () => {
-        unmockDatabase();
-        await database.disconnect();
+        await unmockDatabaseAndDisconnect();
     });
 });
 

@@ -1,12 +1,14 @@
 const faker = require("faker");
 const User = require("../../app/models/User");
 const database = require("../../app/database/database");
-const { mockDatabase, unmockDatabase } = require("../_mocks/database.mock");
+const {
+    mockDatabaseAndConnect,
+    unmockDatabaseAndDisconnect,
+} = require("../_mocks/database.mock");
 
 describe("User", () => {
     beforeAll(async () => {
-        mockDatabase();
-        await database.connect();
+        await mockDatabaseAndConnect();
     });
 
     it("should save an user with the timestamps createdAt and updatedAt", async () => {
@@ -24,7 +26,6 @@ describe("User", () => {
     //@TODO: tests auto password hashing
 
     afterAll(async () => {
-        unmockDatabase();
-        await database.disconnect();
+        await unmockDatabaseAndDisconnect();
     });
 });
