@@ -27,11 +27,32 @@ describe("authMiddleware", () => {
             [faker.lorem.word()]: faker.lorem.word(),
         };
         const next = jest.fn().mockReturnValueOnce(nextReturnValue);
+        const res = {
+            locals: {},
+        };
 
-        const result = authMiddleware(req, {}, next);
+        const result = authMiddleware(req, res, next);
 
         expect(next.mock.calls.length).to.equal(1);
         expect(result).to.deep.equal(nextReturnValue);
+    });
+
+    it("should add id to res local when bearer token is valid", async () => {
+        const validBearerToken = await authMock.mockValidBearerToken();
+        const parsedBearerToken = jwtHelper.check(
+            validBearerToken.substring(7, validBearerToken.length)
+        );
+        const req = { header: () => validBearerToken };
+        const nextReturnValue = {
+            [faker.lorem.word()]: faker.lorem.word(),
+        };
+        const next = jest.fn().mockReturnValueOnce(nextReturnValue);
+        const res = {
+            locals: {},
+        };
+
+        authMiddleware(req, res, next);
+        expect(res.locals).to.have.property("userId", parsedBearerToken.userId);
     });
 
     it("should return unathorized when bearer token doesn't have id", async () => {

@@ -6,8 +6,8 @@ const mockValidBearerToken = async () => {
     return mockBearerToken(userData.user._id);
 };
 
-const mockBearerToken = (id) => {
-    return "Bearer " + jwtHelper.create({ id });
+const mockBearerToken = (userId) => {
+    return "Bearer " + jwtHelper.create({ userId });
 };
 
 module.exports = {

@@ -4,7 +4,8 @@ const { StatusCodes, ReasonPhrases } = require("http-status-codes");
 const authMiddleware = (req, res, next) => {
     const token = getAuthorizationBearerToken(req);
     const parsedToken = jwtHelper.check(token);
-    if (parsedToken && parsedToken.id) {
+    if (parsedToken && parsedToken.userId) {
+        res.locals.userId = parsedToken.userId;
         return next();
     }
     res.status(StatusCodes.UNAUTHORIZED).json({
