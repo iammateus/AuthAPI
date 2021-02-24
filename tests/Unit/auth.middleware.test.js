@@ -38,6 +38,7 @@ describe("authMiddleware", () => {
     });
 
     it("should add id to res local when bearer token is valid", async () => {
+        //@TODO: refactor it
         const validBearerToken = await authMock.mockValidBearerToken();
         const parsedBearerToken = jwtHelper.check(
             validBearerToken.substring(7, validBearerToken.length)
