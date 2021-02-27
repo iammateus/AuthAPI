@@ -5,6 +5,7 @@ const env = require("../../app/helpers/env.helper");
 const expect = require("chai").expect;
 const faker = require("faker");
 const authMock = require("../_mocks/auth.mock");
+const userMock = require("../_mocks/user.mock");
 const {
     mockDatabaseAndConnect,
     unmockDatabaseAndDisconnect,
@@ -21,7 +22,8 @@ describe("authMiddleware", () => {
     });
 
     it("should call next and return next result when bearer token is valid", async () => {
-        const validBearerToken = await authMock.mockValidBearerToken();
+        const userData = await userMock.create();
+        const validBearerToken = await authMock.mockBearerToken(userData.user);
         const req = { header: () => validBearerToken };
         const nextReturnValue = {
             [faker.lorem.word()]: faker.lorem.word(),
@@ -38,10 +40,8 @@ describe("authMiddleware", () => {
     });
 
     it("should add id to res local when bearer token is valid", async () => {
-        const validBearerToken = await authMock.mockValidBearerToken();
-        const parsedBearerToken = jwtHelper.check(
-            validBearerToken.substring(7, validBearerToken.length)
-        );
+        const userData = await userMock.create();
+        const validBearerToken = await authMock.mockBearerToken(userData.user);
         const req = { header: () => validBearerToken };
         const nextReturnValue = {
             [faker.lorem.word()]: faker.lorem.word(),
@@ -52,11 +52,14 @@ describe("authMiddleware", () => {
         };
 
         authMiddleware(req, res, next);
-        expect(res.locals).to.have.property("userId", parsedBearerToken.userId);
+        expect(res.locals).to.have.property(
+            "userId",
+            userData.user._id.toString()
+        );
     });
 
     it("should return unathorized when bearer token doesn't have id", async () => {
-        const invalidBearerToken = await authMock.mockBearerToken();
+        const invalidBearerToken = await authMock.mockBearerToken({});
         const req = { header: () => invalidBearerToken };
         const res = {};
         res.status = jest.fn().mockReturnValue(res);
