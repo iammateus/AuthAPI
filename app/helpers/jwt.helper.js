@@ -6,7 +6,7 @@ const create = (content) => {
     return jwt.sign(content, secret);
 };
 
-const check = (token) => {
+const parse = (token) => {
     const secret = env.get("AUTH_SECRET");
     try {
         return jwt.verify(token, secret);
@@ -17,5 +17,5 @@ const check = (token) => {
 
 module.exports = {
     create,
-    check,
+    parse,
 };

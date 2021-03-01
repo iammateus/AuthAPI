@@ -5,7 +5,7 @@ const {
     mockDatabaseAndConnect,
     unmockDatabaseAndDisconnect,
 } = require("../_mocks/database.mock");
-const jwt = require("../../app/helpers/jwt.helper");
+const jwtHelper = require("../../app/helpers/jwt.helper");
 const userMock = require("../_mocks/user.mock");
 const faker = require("faker");
 
@@ -31,7 +31,7 @@ describe("/auth/login", () => {
             "User authenticated successfully"
         );
         const { token } = response.body.data;
-        expect(jwt.check(token)).toBeTruthy();
+        expect(jwtHelper.parse(token)).toBeTruthy();
     });
 
     it("should return token with user id when user is authenticated successfully", async () => {
@@ -42,7 +42,7 @@ describe("/auth/login", () => {
         };
         const response = await request(app).post("/auth/login").send(data);
         const { token } = response.body.data;
-        const decodedToken = jwt.check(token);
+        const decodedToken = jwtHelper.parse(token);
 
         expect(decodedToken.id).toBeTruthy();
         expect(String(decodedToken.id)).toEqual(String(user._id));

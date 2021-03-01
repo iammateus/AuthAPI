@@ -1,4 +1,4 @@
-const { create, check } = require("../../app/helpers/jwt.helper");
+const { create, parse } = require("../../app/helpers/jwt.helper");
 const jwt = require("jsonwebtoken");
 const env = require("../../app/helpers/env.helper");
 const faker = require("faker");
@@ -32,9 +32,9 @@ describe("create", () => {
     });
 });
 
-describe("check", () => {
+describe("parse", () => {
     it("should be a function", () => {
-        expect(check).toBeInstanceOf(Function);
+        expect(parse).toBeInstanceOf(Function);
     });
 
     it("should return jwt content when token is valid", () => {
@@ -43,20 +43,20 @@ describe("check", () => {
         };
         const secret = env.get("AUTH_SECRET");
         const token = jwt.sign(content, secret);
-        const result = check(token);
+        const result = parse(token);
         expect(result).toMatchObject(content);
     });
 
     it("should return false when jwt is signed with an invalid secret", () => {
         const invalidSecret = faker.lorem.word();
         const invalidToken = jwt.sign({}, invalidSecret);
-        const result = check(invalidToken);
+        const result = parse(invalidToken);
         expect(result).toBe(false);
     });
 
     it("should return false when jwt is invalid", () => {
         const invalidToken = faker.lorem.word();
-        const result = check(invalidToken);
+        const result = parse(invalidToken);
         expect(result).toBe(false);
     });
 });

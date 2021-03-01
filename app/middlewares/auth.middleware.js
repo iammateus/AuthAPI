@@ -3,7 +3,7 @@ const { StatusCodes, ReasonPhrases } = require("http-status-codes");
 
 const authMiddleware = (req, res, next) => {
     const token = getAuthorizationBearerToken(req);
-    const parsedToken = jwtHelper.check(token);
+    const parsedToken = jwtHelper.parse(token);
     if (parsedToken && parsedToken.userId) {
         res.locals.userId = parsedToken.userId;
         return next();
