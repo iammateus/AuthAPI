@@ -2,7 +2,7 @@ const { validate } = require("../controllers/controller");
 const PostAuthLogin = require("../validations/PostAuthLogin");
 const User = require("../models/User");
 const { StatusCodes } = require("http-status-codes");
-const { check } = require("../helpers/passwordHash.helper");
+const { check } = require("../helpers/hash.helper");
 const jwtHelper = require("../helpers/jwt.helper");
 
 const login = async (req, res, next) => {

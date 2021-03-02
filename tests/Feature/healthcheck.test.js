@@ -7,7 +7,7 @@ describe("/healthcheck", () => {
         const response = await request(app).get("/healthcheck");
         expect(response.status).toEqual(StatusCodes.OK);
         expect(response.body).toMatchObject({
-            message: "The server is running (CanvasAPI)",
+            message: "The server is running (Auth API)",
         });
     });
 });

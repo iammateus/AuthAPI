@@ -1,4 +1,4 @@
-const { hash, check } = require("../../app/helpers/passwordHash.helper");
+const { hash, check } = require("../../app/helpers/hash.helper");
 const faker = require("faker");
 const bcrypt = require("bcrypt");
 
