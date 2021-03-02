@@ -28,4 +28,4 @@ The file .env.dev has all the necessary environment variabes and their values to
 
 ## License
 
-[MIT](https://github.com/iammateus/CanvasAPI/blob/master/LICENSE)
+[MIT](https://github.com/iammateus/AuthAPI/blob/master/LICENSE)
