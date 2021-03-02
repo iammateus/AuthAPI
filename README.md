@@ -1,8 +1,8 @@
-# Canvas API
+# Auth API
 
-An authentication API for the project [Canvas](https://github.com/iammateus/Canvas).
+A Node.js authentication API with very simple endpoints, created to provide straightforward user authentication.
 
-This API is not the real-time online service that will provide the means of playing Canvas in multiplayer mode, the goal of this project is to make it possible to sign-up and sign-in on the app.
+This project has a basic behavior and it's intended to be the backbone of more complex user management.
 
 ## Requeriments
 
@@ -28,4 +28,4 @@ The file .env.dev has all the necessary environment variabes and their values to
 
 ## License
 
-[MIT](https://github.com/iammateus/CanvasAPI/blob/master/LICENSE)
+[MIT](https://github.com/iammateus/AuthAPI/blob/master/LICENSE)
