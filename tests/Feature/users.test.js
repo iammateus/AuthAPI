@@ -1,11 +1,9 @@
 jest.mock("../../app/middlewares/auth.middleware.js", () =>
     jest.fn((req, res, next) => next())
 );
-const authMiddleware = require("../../app/middlewares/auth.middleware.js");
 const request = require("supertest");
-const { StatusCodes, ReasonPhrases } = require("http-status-codes");
 const app = require("../../index");
-
+const { StatusCodes, ReasonPhrases } = require("http-status-codes");
 const {
     mockDatabaseAndConnect,
     unmockDatabaseAndDisconnect,
@@ -168,13 +166,20 @@ describe("/users", () => {
 });
 
 describe("/users/me", () => {
-    it("should be a private route", async () => {
-        const response = await request(app).post("/users/me");
-        expect(authMiddleware.mock.calls.length).toEqual(1);
-    });
-
     it("should exist", async () => {
         const response = await request(app).post("/users/me");
         expect(response.status !== StatusCodes.NOT_FOUND).toBe(true);
+    });
+
+    it("should be a private route", async () => {
+        jest.resetModules();
+        jest.mock("../../app/middlewares/auth.middleware.js", () =>
+            jest.fn((req, res, next) => next())
+        );
+        const authMiddleware = require("../../app/middlewares/auth.middleware.js");
+        const request = require("supertest");
+        const app = require("../../index");
+        await request(app).post("/users/me");
+        expect(authMiddleware.mock.calls.length).toEqual(1);
     });
 });
