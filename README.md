@@ -34,11 +34,7 @@ Run a specific test
 | WAIT_FOR_DATABASE_DELAY| The time in milliseconds that the aplication server must wait for the MongoDB server to be ready|
 | AUTH_SECRET| Secret for JWT encryption|
 
-* The file .env.dev has all the necessary environment variabes and their values to run the application locally. It can be used as an example.
-
-| Name | Value |
-|--|--|
-| DB_HOST| The MongoDB Host |
+*The file .env.dev has all the necessary environment variabes and their values to run the application locally. It can be used as an example.
 
 ## License
 
