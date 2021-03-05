@@ -24,7 +24,21 @@ Run a specific test
 
 ## Env
 
-The file .env.dev has all the necessary environment variabes and their values to run the application locally. It can be used as an example.
+| Name | Value |
+|--|--|
+| DB_HOST| The MongoDB server Host |
+| DB_PORT| The MongoDB server  Port|
+| DB_NAME| The MongoDB database name|
+| DB_USER| The MongoDB username for authentication|
+| DB_PASS| The MongoDB password for authentication|
+| WAIT_FOR_DATABASE_DELAY| The time in milliseconds that the aplication server must wait for the MongoDB server to be ready|
+| AUTH_SECRET| Secret for JWT encryption|
+
+* The file .env.dev has all the necessary environment variabes and their values to run the application locally. It can be used as an example.
+
+| Name | Value |
+|--|--|
+| DB_HOST| The MongoDB Host |
 
 ## License
 
