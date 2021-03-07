@@ -1,0 +1,52 @@
+openapi: "3.0.0"
+info:
+  description: "A Node.js authentication API that uses JWT to provide very simple endpoints, and straightforward user authentication. \n\n This project has a basic behavior and it's intended to be the backbone of more complex user management."
+  version: "1.0.0"
+  title: "Auth API"
+  license:
+    name: "MIT"
+    url: "https://github.com/iammateus/AuthAPI/blob/master/LICENSE"
+tags:
+- name: "User"
+  description: "Operations about user"
+paths:
+  /users:
+    post:
+      tags:
+      - "User"
+      summary: "Create an user"
+      operationId: "createUser"
+      requestBody:
+        description: "User object to be created"
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                email:
+                  type: "string"
+                  example: "user@email.com"
+                name:
+                  type: "string"
+                  example: "Funny Puppy"
+                password:
+                  type: "string"
+                  example: "&8mTwX*e"
+                password_confirmation:
+                  type: "string"
+                  example: "&8mTwX*e"
+                  description: "Should have the same value of field password"
+      responses:
+        201:
+          description: "The user was created successfully"
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  message:
+                    type: "string"
+                    example: "The user was created successfully"
+
+          
