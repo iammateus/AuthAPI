@@ -6,6 +6,9 @@ info:
   license:
     name: "MIT"
     url: "https://github.com/iammateus/AuthAPI/blob/master/LICENSE"
+servers:
+  - url: http://localhost:8000
+    description: Local server
 tags:
 - name: "User"
   description: "Operations about user"
@@ -22,24 +25,10 @@ paths:
         content:
           application/json:
             schema:
-              type: "object"
-              properties:
-                email:
-                  type: "string"
-                  example: "user@email.com"
-                name:
-                  type: "string"
-                  example: "Funny Puppy"
-                password:
-                  type: "string"
-                  example: "&8mTwX*e"
-                password_confirmation:
-                  type: "string"
-                  example: "&8mTwX*e"
-                  description: "Should have the same value of field password"
+              $ref: '#/components/schemas/userInput'
       responses:
         201:
-          description: "The user was created successfully"
+          description: "Success"
           content:
             application/json:
               schema: 
@@ -48,5 +37,31 @@ paths:
                   message:
                     type: "string"
                     example: "The user was created successfully"
-
-          
+        422:
+          description: "Invalid data"
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  message:
+                    type: "string"
+                    example: '"email" is required'
+components:
+  schemas:
+    userInput:
+      type: "object"
+      properties:
+        email:
+          type: "string"
+          example: "user@email.com"
+        name:
+          type: "string"
+          example: "Funny Puppy"
+        password:
+          type: "string"
+          example: "&8mTwX*e"
+        password_confirmation:
+          type: "string"
+          example: "&8mTwX*e"
+          description: "Should have the same value of field password"
