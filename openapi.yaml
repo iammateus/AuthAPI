@@ -66,4 +66,4 @@ components:
         password_confirmation:
           type: "string"
           example: "&8mTwX*e"
-          description: "Should have the same value of field password"
+          description: "Should have the same value of the field \"password\""
