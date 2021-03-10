@@ -8,6 +8,7 @@ const {
     StatusCodes,
     getReasonPhrase,
 } = require("http-status-codes");
+const cors = require('cors')
 const path = require("path");
 const logger = require("morgan");
 const express = require("express");
@@ -16,6 +17,7 @@ const publicRouter = require("./app/routes/public");
 
 const app = express();
 
+app.use(cors());
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
