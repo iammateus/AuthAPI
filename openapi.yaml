@@ -1,4 +1,4 @@
-openapi: "3.0.0"
+openapi: "3.0.2"
 info:
   description: "A Node.js authentication API that uses JWT to provide very simple endpoints, and straightforward user authentication. \n\n This project has a basic behavior and it's intended to be the backbone of more complex user management."
   version: "1.0.0"
