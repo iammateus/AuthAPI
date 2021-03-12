@@ -67,3 +67,8 @@ components:
           type: "string"
           example: "&8mTwX*e"
           description: "Should have the same value of the field \"password\""
+      required:
+        - "email"
+        - "name"
+        - "password"
+        - "password_confirmation"
