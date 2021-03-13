@@ -52,9 +52,6 @@ describe("/users", () => {
         expect(response.status).toEqual(StatusCodes.UNPROCESSABLE_ENTITY);
         expect(response.body).toMatchObject({
             message: '"email" is required',
-            path: ["email"],
-            type: "any.required",
-            context: { label: "email", key: "email" },
         });
     });
 
@@ -66,9 +63,6 @@ describe("/users", () => {
         expect(response.status).toEqual(StatusCodes.UNPROCESSABLE_ENTITY);
         expect(response.body).toMatchObject({
             message: '"email" must be a valid email',
-            path: ["email"],
-            type: "string.email",
-            context: { label: "email", key: "email" },
         });
     });
 
@@ -80,9 +74,6 @@ describe("/users", () => {
         expect(response.status).toEqual(StatusCodes.UNPROCESSABLE_ENTITY);
         expect(response.body).toMatchObject({
             message: '"password" is required',
-            path: ["password"],
-            type: "any.required",
-            context: { label: "password", key: "password" },
         });
     });
 
@@ -95,9 +86,6 @@ describe("/users", () => {
         expect(response.status).toEqual(StatusCodes.UNPROCESSABLE_ENTITY);
         expect(response.body).toMatchObject({
             message: '"password" length must be at least 8 characters long',
-            path: ["password"],
-            type: "string.min",
-            context: { label: "password", key: "password" },
         });
     });
 
@@ -111,12 +99,6 @@ describe("/users", () => {
         expect(response.status).toEqual(StatusCodes.UNPROCESSABLE_ENTITY);
         expect(response.body).toMatchObject({
             message: '"password_confirmation" must be [ref:password]',
-            path: ["password_confirmation"],
-            type: "any.only",
-            context: {
-                label: "password_confirmation",
-                key: "password_confirmation",
-            },
         });
     });
 
@@ -131,9 +113,6 @@ describe("/users", () => {
         expect(response.status).toEqual(StatusCodes.UNPROCESSABLE_ENTITY);
         expect(response.body).toMatchObject({
             message: '"name" is required',
-            path: ["name"],
-            type: "any.required",
-            context: { label: "name", key: "name" },
         });
     });
 

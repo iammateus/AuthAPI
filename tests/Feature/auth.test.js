@@ -53,9 +53,6 @@ describe("/auth/login", () => {
         expect(response.status).toEqual(StatusCodes.UNPROCESSABLE_ENTITY);
         expect(response.body).toMatchObject({
             message: '"email" is required',
-            path: ["email"],
-            type: "any.required",
-            context: { label: "email", key: "email" },
         });
     });
 
@@ -67,9 +64,6 @@ describe("/auth/login", () => {
         expect(response.status).toEqual(StatusCodes.UNPROCESSABLE_ENTITY);
         expect(response.body).toMatchObject({
             message: '"email" must be a valid email',
-            path: ["email"],
-            type: "string.email",
-            context: { label: "email", key: "email" },
         });
     });
 
@@ -81,9 +75,6 @@ describe("/auth/login", () => {
         expect(response.status).toEqual(StatusCodes.UNPROCESSABLE_ENTITY);
         expect(response.body).toMatchObject({
             message: '"password" is required',
-            path: ["password"],
-            type: "any.required",
-            context: { label: "password", key: "password" },
         });
     });
 
@@ -96,9 +87,6 @@ describe("/auth/login", () => {
         expect(response.status).toEqual(StatusCodes.UNPROCESSABLE_ENTITY);
         expect(response.body).toMatchObject({
             message: '"password" length must be at least 8 characters long',
-            path: ["password"],
-            type: "string.min",
-            context: { label: "password", key: "password" },
         });
     });
 
