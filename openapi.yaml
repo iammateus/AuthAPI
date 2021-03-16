@@ -17,15 +17,15 @@ paths:
     post:
       tags:
       - "User"
-      summary: "Create an user"
+      summary: "Create user"
       operationId: "createUser"
       requestBody:
-        description: "User object to be created"
+        description: "User data"
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/userInput'
+              $ref: "#/components/schemas/userInput"
       responses:
         201:
           description: "Success"
