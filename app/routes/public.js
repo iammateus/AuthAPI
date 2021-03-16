@@ -9,7 +9,7 @@ const authMiddleware = require("../middlewares/auth.middleware");
 router.get("/healthcheck", healthcheckController.healthcheck);
 
 router.post("/users", userController.create);
-router.post("/users/me", authMiddleware, userController.me);
+router.get("/users/me", authMiddleware, userController.me);
 
 router.post("/auth/login", authController.login);
 

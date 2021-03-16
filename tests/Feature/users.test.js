@@ -146,7 +146,7 @@ describe("/users", () => {
 
 describe("/users/me", () => {
     it("should exist", async () => {
-        const response = await request(app).post("/users/me");
+        const response = await request(app).get("/users/me");
         expect(response.status !== StatusCodes.NOT_FOUND).toBe(true);
     });
 
@@ -158,7 +158,7 @@ describe("/users/me", () => {
         const authMiddleware = require("../../app/middlewares/auth.middleware.js");
         const request = require("supertest");
         const app = require("../../index");
-        await request(app).post("/users/me");
+        await request(app).get("/users/me");
         expect(authMiddleware.mock.calls.length).toEqual(1);
     });
 });
