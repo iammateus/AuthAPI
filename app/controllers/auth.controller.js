@@ -26,7 +26,7 @@ const login = async (req, res, next) => {
         });
     }
 
-    const token = jwtHelper.create({ id: user._id });
+    const token = jwtHelper.create({ userId: user._id });
 
     res.json({
         message: "User authenticated successfully",

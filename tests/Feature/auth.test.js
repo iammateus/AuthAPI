@@ -44,8 +44,8 @@ describe("/auth/login", () => {
         const { token } = response.body.data;
         const decodedToken = jwtHelper.parse(token);
 
-        expect(decodedToken.id).toBeTruthy();
-        expect(String(decodedToken.id)).toEqual(String(user._id));
+        expect(decodedToken.userId).toBeTruthy();
+        expect(String(decodedToken.userId)).toEqual(String(user._id));
     });
 
     it("should return unprocessable entity when email is not informed", async () => {
