@@ -47,6 +47,32 @@ paths:
                   message:
                     type: "string"
                     example: '"email" is required'
+  /users/me:
+    get:
+      security:
+        - auth: [] 
+      tags:
+      - "User"
+      summary: "Show user"
+      operationId: "showUser"
+      responses:
+        200:
+          description: "Success"
+          content:
+            application/json:
+              schema: 
+                type: object
+                description: "User data"
+        401:
+          description: "Unauthorized"
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  message:
+                    type: "string"
+                    example: "Unauthorized"
 components:
   schemas:
     userInput:
@@ -72,3 +98,8 @@ components:
         - "name"
         - "password"
         - "password_confirmation"
+  securitySchemes:
+    auth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT 
