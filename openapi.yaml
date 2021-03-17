@@ -7,8 +7,8 @@ info:
     name: "MIT"
     url: "https://github.com/iammateus/AuthAPI/blob/master/LICENSE"
 servers:
-  - url: http://localhost:8000
-    description: Local server
+  - url: "http://localhost:8000"
+    description: "Local server"
 tags:
 - name: "User"
   description: "Operations about user"
@@ -46,7 +46,7 @@ paths:
                 properties:
                   message:
                     type: "string"
-                    example: '"email" is required'
+                    example: "\"email\" is required"
   /users/me:
     get:
       security:
@@ -102,4 +102,4 @@ components:
     auth:
       type: http
       scheme: bearer
-      bearerFormat: JWT 
+      bearerFormat: JWT
