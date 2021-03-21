@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const { hash } = require("../helpers/hash.helper");
+const hashHelper = require("../helpers/hash.helper");
 
 const UserSchema = new Schema(
     {
@@ -19,7 +19,7 @@ UserSchema.pre("save", async function save(next) {
         return next();
     }
     try {
-        this.password = await hash(this.password);
+        this.password = await hashHelper.hash(this.password);
         return next();
     } catch (error) {
         return next(error);

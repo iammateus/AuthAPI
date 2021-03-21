@@ -2,7 +2,7 @@ const { validate } = require("../controllers/controller");
 const PostAuthLogin = require("../validations/PostAuthLogin");
 const User = require("../models/User");
 const { StatusCodes } = require("http-status-codes");
-const { check } = require("../helpers/hash.helper");
+const hashHelper = require("../helpers/hash.helper");
 const jwtHelper = require("../helpers/jwt.helper");
 
 const login = async (req, res, next) => {
@@ -19,7 +19,7 @@ const login = async (req, res, next) => {
         });
     }
 
-    const isPasswordValid = await check(password, user.password);
+    const isPasswordValid = await hashHelper.check(password, user.password);
     if (!isPasswordValid) {
         return res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({
             message: "Email or password does not exist",

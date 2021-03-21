@@ -8,7 +8,7 @@ const {
     mockDatabaseAndConnect,
     unmockDatabaseAndDisconnect,
 } = require("../_mocks/database.mock");
-const { check } = require("../../app/helpers/hash.helper");
+const hashHelper = require("../../app/helpers/hash.helper");
 const faker = require("faker");
 const User = require("../../app/models/User");
 
@@ -39,7 +39,7 @@ describe("/users", () => {
         });
         expect(user).toBeTruthy();
 
-        const savedHashMatchesInformedPass = await check(
+        const savedHashMatchesInformedPass = await hashHelper.check(
             data.password,
             user.password
         );

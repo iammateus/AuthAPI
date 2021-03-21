@@ -1,4 +1,4 @@
-const { create, parse } = require("../../app/helpers/jwt.helper");
+const jwtHelper = require("../../app/helpers/jwt.helper");
 const jwt = require("jsonwebtoken");
 const env = require("../../app/helpers/env.helper");
 const faker = require("faker");
@@ -9,14 +9,14 @@ describe("create", () => {
     });
 
     it("should be a function", () => {
-        expect(create).toBeInstanceOf(Function);
+        expect(jwtHelper.create).toBeInstanceOf(Function);
     });
 
     it("should return an string", () => {
         const content = {
             [faker.lorem.word()]: faker.lorem.word(),
         };
-        const token = create(content);
+        const token = jwtHelper.create(content);
         expect(typeof token === "string").toBe(true);
     });
 
@@ -24,7 +24,7 @@ describe("create", () => {
         const content = {
             [faker.lorem.word()]: faker.lorem.word(),
         };
-        const token = create(content);
+        const token = jwtHelper.create(content);
         const secret = env.get("AUTH_SECRET");
         const result = jwt.verify(token, secret);
         expect(result).toBeTruthy();
@@ -34,7 +34,7 @@ describe("create", () => {
 
 describe("parse", () => {
     it("should be a function", () => {
-        expect(parse).toBeInstanceOf(Function);
+        expect(jwtHelper.parse).toBeInstanceOf(Function);
     });
 
     it("should return jwt content when token is valid", () => {
@@ -43,20 +43,20 @@ describe("parse", () => {
         };
         const secret = env.get("AUTH_SECRET");
         const token = jwt.sign(content, secret);
-        const result = parse(token);
+        const result = jwtHelper.parse(token);
         expect(result).toMatchObject(content);
     });
 
     it("should return false when jwt is signed with an invalid secret", () => {
         const invalidSecret = faker.lorem.word();
         const invalidToken = jwt.sign({}, invalidSecret);
-        const result = parse(invalidToken);
+        const result = jwtHelper.parse(invalidToken);
         expect(result).toBe(false);
     });
 
     it("should return false when jwt is invalid", () => {
         const invalidToken = faker.lorem.word();
-        const result = parse(invalidToken);
+        const result = jwtHelper.parse(invalidToken);
         expect(result).toBe(false);
     });
 });
