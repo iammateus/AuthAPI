@@ -11,6 +11,7 @@
     },
     "dependencies": {
         "@shelf/jest-mongodb": "^1.2.3",
+        "async-middleware": "^1.2.1",
         "bcrypt": "^5.0.0",
         "chai": "^4.3.0",
         "cookie-parser": "~1.4.4",
