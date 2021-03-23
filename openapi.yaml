@@ -61,8 +61,7 @@ paths:
           content:
             application/json:
               schema: 
-                type: object
-                description: "User data"
+                $ref: "#/components/schemas/userOutput"
         401:
           description: "Unauthorized"
           content:
@@ -98,6 +97,22 @@ components:
         - "name"
         - "password"
         - "password_confirmation"
+    userOutput:
+      type: "object"
+      properties:
+        email:
+          type: "string"
+          example: "user@email.com"
+          description: "Should be a valid email"
+        name:
+          type: "string"
+          example: "Funny Puppy"
+        createdAt:
+          type: "string"
+          example: "Tue Mar 09 2021 00:00:54 GMT+0000 (Coordinated Universal Time)"
+        updatedAt:
+          type: "string"
+          example: "Tue Mar 09 2021 00:00:54 GMT+0000 (Coordinated Universal Time)"
   securitySchemes:
     auth:
       type: http
