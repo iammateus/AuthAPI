@@ -40,7 +40,7 @@ app.use(function (req, res, next) {
  */
 app.use(async function (err, req, res, next) {
     // set locals, only providing error in development
-    console.error("Error handler -> ", {
+    console.log("Error handler -> ", {
         error: err,
     });
     const error = req.app.get("env") === "development" ? err : {};
