@@ -16,8 +16,18 @@ const create = async (req, res, next) => {
     });
 };
 
-const me = (req, res, next) => {
-    res.json({});
+const me = async (req, res, next) => {
+    const user = await User.findOne({ _id: res.locals.userId });
+    res.json({
+        data: {
+            user: {
+                name: user.name,
+                email: user.email,
+                createdAt: user.createdAt.toString(),
+                updatedAt: user.updatedAt.toString(),
+            },
+        },
+    });
 };
 
 module.exports = { create, me };

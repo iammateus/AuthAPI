@@ -8,7 +8,7 @@ const {
     StatusCodes,
     getReasonPhrase,
 } = require("http-status-codes");
-const cors = require('cors')
+const cors = require("cors");
 const path = require("path");
 const logger = require("morgan");
 const express = require("express");
@@ -40,13 +40,20 @@ app.use(function (req, res, next) {
  */
 app.use(async function (err, req, res, next) {
     // set locals, only providing error in development
+    console.error("Error handler -> ", {
+        error: err,
+    });
     const error = req.app.get("env") === "development" ? err : {};
     res.locals.message = err.message;
     res.locals.error = error;
-    
-    res.status(err.status || StatusCodes.INTERNAL_SERVER_ERROR).json({
-        message: req.app.get("env") === "development" ? err.message : getReasonPhrase(statusCode),
-        error
+
+    const statusCode = err.status || StatusCodes.INTERNAL_SERVER_ERROR;
+    res.status(statusCode).json({
+        message:
+            req.app.get("env") === "development"
+                ? err.message
+                : getReasonPhrase(statusCode),
+        error,
     });
 });
 

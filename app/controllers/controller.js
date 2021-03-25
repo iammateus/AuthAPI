@@ -6,7 +6,7 @@ const validate = async (data, joySchema, res) => {
         await validator.validate(data, joySchema);
     } catch (err) {
         return res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({
-            message: err.message
+            message: err.message,
         });
     }
 };

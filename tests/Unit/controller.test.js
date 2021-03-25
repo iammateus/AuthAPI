@@ -27,9 +27,9 @@ describe("validate", () => {
     it("should send unprocessable entity response code and error object to res param when validation fails", async () => {
         const error = {
             message: "Error",
-        }
+        };
         validator.validate.mockImplementationOnce(async () => {
-            throw error
+            throw error;
         });
         const json = jest.fn();
         const res = {

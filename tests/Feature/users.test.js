@@ -146,19 +146,59 @@ describe("/users", () => {
 
 describe("/users/me", () => {
     it("should exist", async () => {
+        const {
+            mockDatabaseAndConnect,
+            unmockDatabaseAndDisconnect,
+        } = require("../_mocks/database.mock");
+        await mockDatabaseAndConnect();
         const response = await request(app).get("/users/me");
         expect(response.status !== StatusCodes.NOT_FOUND).toBe(true);
+        await unmockDatabaseAndDisconnect();
     });
 
     it("should be a private route", async () => {
-        jest.resetModules();
-        jest.mock("../../app/middlewares/auth.middleware.js", () =>
-            jest.fn((req, res, next) => next())
-        );
+        const {
+            mockDatabaseAndConnect,
+            unmockDatabaseAndDisconnect,
+        } = require("../_mocks/database.mock");
+        await mockDatabaseAndConnect();
         const authMiddleware = require("../../app/middlewares/auth.middleware.js");
+        await request(app).get("/users/me");
+        expect(authMiddleware.mock.calls.length > 0).toBe(true);
+        await unmockDatabaseAndDisconnect();
+    });
+
+    it("should return user information", async () => {
+        jest.resetModules();
+        jest.unmock("../../app/middlewares/auth.middleware.js");
         const request = require("supertest");
         const app = require("../../index");
-        await request(app).get("/users/me");
-        expect(authMiddleware.mock.calls.length).toEqual(1);
+        const userMock = require("../_mocks/user.mock");
+        const authMock = require("../_mocks/auth.mock");
+        const {
+            mockDatabaseAndConnect,
+            unmockDatabaseAndDisconnect,
+        } = require("../_mocks/database.mock");
+        await mockDatabaseAndConnect();
+
+        const { user } = await userMock.create();
+        const bearerToken = await authMock.mockBearerToken(user);
+        const response = await request(app).get("/users/me").set({
+            Authorization: bearerToken,
+        });
+
+        expect(response.status).toEqual(StatusCodes.OK);
+        expect(response.body).toMatchObject({
+            data: {
+                user: {
+                    name: user.name,
+                    email: user.email,
+                    createdAt: user.createdAt.toString(),
+                    updatedAt: user.updatedAt.toString(),
+                },
+            },
+        });
+
+        await unmockDatabaseAndDisconnect();
     });
 });
