@@ -1,3 +1,4 @@
+
 # Auth API
 
 A Node.js authentication API that uses JWT to provide very simple endpoints, and straightforward user authentication.
@@ -36,6 +37,11 @@ Run a specific test
 
 *The file .env.dev has all the necessary environment variabes and their values to run the application locally. It can be used as an example.
 
+## Usage
+
+Check the complete API documentation [here](https://editor.swagger.io/?url=https://raw.githubusercontent.com/iammateus/AuthAPI/master/openapi.yaml).
+
 ## License
 
 [MIT](https://github.com/iammateus/AuthAPI/blob/master/LICENSE)
+
