@@ -5,6 +5,10 @@ A Node.js authentication API that uses JWT to provide very simple endpoints, and
 
 This project has a basic behavior and it's intended to be the backbone of more complex user management.
 
+## Usage
+
+Check the complete API documentation [here](https://editor.swagger.io/?url=https://raw.githubusercontent.com/iammateus/AuthAPI/master/openapi.yaml).
+
 ## Requeriments
 
 1. This project runs on [Docker](https://docs.docker.com/).
@@ -36,10 +40,6 @@ Run a specific test
 | AUTH_SECRET| Secret for JWT encryption|
 
 *The file .env.dev has all the necessary environment variabes and their values to run the application locally. It can be used as an example.
-
-## Usage
-
-Check the complete API documentation [here](https://editor.swagger.io/?url=https://raw.githubusercontent.com/iammateus/AuthAPI/master/openapi.yaml).
 
 ## License
 
