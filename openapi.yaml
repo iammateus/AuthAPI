@@ -60,8 +60,14 @@ paths:
           description: "Success"
           content:
             application/json:
-              schema: 
-                $ref: "#/components/schemas/userOutput"
+              schema:
+                type: "object"
+                properties:
+                  data:
+                    type: "object"
+                    properties:
+                      user: 
+                        $ref: "#/components/schemas/userOutput"
         401:
           description: "Unauthorized"
           content:
@@ -100,10 +106,12 @@ components:
     userOutput:
       type: "object"
       properties:
+        id:
+          type: "string"
+          example: "6064d43defea9e027af8e4de"
         email:
           type: "string"
           example: "user@email.com"
-          description: "Should be a valid email"
         name:
           type: "string"
           example: "Funny Puppy"
