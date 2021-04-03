@@ -47,6 +47,48 @@ paths:
                   message:
                     type: "string"
                     example: "\"email\" is required"
+  /auth/login:
+    post:
+      security:
+        - auth: [] 
+      tags:
+      - "User"
+      summary: "Sign in user"
+      operationId: "signInUser"
+      requestBody:
+        description: "User credentials"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/userCredentials"
+      responses:
+        200:
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  data:
+                    type: "object"
+                    properties:
+                      message:
+                        type: "string"
+                        example: "User authenticated successfully"
+                      token:
+                        type: "string"
+                        example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MDUxM2U2YmJkOTdlZTA5YjVjZTNlODAiLCJpYXQiOjE2MTc0NjU1NjR9.lfDS9QwLys_MMHxM8QqYPGO2v2B9bGdJC6O_w_8VJhA"
+        422:
+          description: "Invalid credentials"
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  message:
+                    type: "string"
+                    example: "Email or password does not exist"
   /users/me:
     get:
       security:
@@ -103,6 +145,17 @@ components:
         - "name"
         - "password"
         - "password_confirmation"
+    userCredentials:
+      type: "object"
+      properties:
+        email:
+          type: "string"
+          example: "user@email.com"
+        password:
+          type: "string"
+          example: "&8mTwX*e"
+      required:
+        - "password"
     userOutput:
       type: "object"
       properties:
