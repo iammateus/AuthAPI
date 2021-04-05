@@ -156,6 +156,7 @@ components:
           example: "&8mTwX*e"
       required:
         - "password"
+        - "email"
     userOutput:
       type: "object"
       properties:
