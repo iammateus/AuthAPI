@@ -75,18 +75,15 @@ paths:
               schema:
                 type: "object"
                 properties:
-                  data:
+                  message:
+                    type: "string"
+                    example: "User authenticated successfully"
+                  data: 
                     type: "object"
                     properties:
-                      message:
+                      token:
                         type: "string"
-                        example: "User authenticated successfully"
-                      data: 
-                        type: "object"
-                        properties:
-                          token:
-                            type: "string"
-                            example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MDUxM2U2YmJkOTdlZTA5YjVjZTNlODAiLCJpYXQiOjE2MTc0NjU1NjR9.lfDS9QwLys_MMHxM8QqYPGO2v2B9bGdJC6O_w_8VJhA"
+                        example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MDUxM2U2YmJkOTdlZTA5YjVjZTNlODAiLCJpYXQiOjE2MTc0NjU1NjR9.lfDS9QwLys_MMHxM8QqYPGO2v2B9bGdJC6O_w_8VJhA"
         422:
           description: "Invalid credentials"
           content:
