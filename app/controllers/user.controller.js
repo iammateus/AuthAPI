@@ -13,6 +13,15 @@ const create = async (req, res, next) => {
     await user.save();
     res.status(StatusCodes.CREATED).json({
         message: "The user was created successfully",
+        data: {
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                createdAt: user.createdAt.toString(),
+                updatedAt: user.updatedAt.toString(),
+            },
+        },
     });
 };
 

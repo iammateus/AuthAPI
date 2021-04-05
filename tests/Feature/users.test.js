@@ -19,7 +19,7 @@ describe("/users", () => {
         expect(response.status !== StatusCodes.NOT_FOUND).toBe(true);
     });
 
-    it("should register user and return created status code when user data is valid", async () => {
+    it("should register user and return them when user data is valid", async () => {
         const pass = faker.lorem.word(8);
         const data = {
             email: faker.internet.email(),
@@ -41,6 +41,19 @@ describe("/users", () => {
             user.password
         );
         expect(savedHashMatchesInformedPass).toBe(true);
+
+        expect(response.body).toMatchObject({
+            message: "The user was created successfully",
+            data: {
+                user: {
+                    id: user._id.toString(),
+                    name: user.name,
+                    email: user.email,
+                    createdAt: user.createdAt.toString(),
+                    updatedAt: user.updatedAt.toString(),
+                },
+            },
+        });
     });
 
     it("should return unprocessable entity when email is not informed", async () => {
