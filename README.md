@@ -1,7 +1,7 @@
 
 # Auth API
 
-A Node.js authentication API that uses JWT to provide very simple endpoints, and straightforward user authentication.
+A Express/Node authentication API that uses JWT to provide very simple endpoints, and straightforward user authentication.
 
 This project has a basic behavior and it's intended to be the backbone of more complex user management.
 
