@@ -204,9 +204,9 @@ describe("private routes", () => {
             jest.fn((req, res, next) => next())
         );
         databaseMock = require("../_mocks/database.mock");
-        authMiddleware = require("../../app/middlewares/auth.middleware.js");
         request = require("supertest");
         app = require("../../index");
+        authMiddleware = require("../../app/middlewares/auth.middleware.js");
         await databaseMock.mockDatabaseAndConnect();
     });
     it("/users/me should be a private route", async () => {
