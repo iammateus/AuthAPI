@@ -56,8 +56,6 @@ paths:
                     example: "\"email\" is required"
   /auth/login:
     post:
-      security:
-        - auth: [] 
       tags:
       - "User"
       summary: "Authenticate user"
