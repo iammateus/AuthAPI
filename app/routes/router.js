@@ -2,12 +2,12 @@ const express = require("express");
 const router = express.Router();
 const authController = require("../controllers/auth.controller");
 const userController = require("../controllers/user.controller");
-const healthcheckController = require("../controllers/healthcheck.controller");
+const healthController = require("../controllers/health.controller");
 const { wrap } = require("async-middleware");
 
 const authMiddleware = require("../middlewares/auth.middleware");
 
-router.get("/healthcheck", wrap(healthcheckController.healthcheck));
+router.get("/health", wrap(healthController.health));
 
 router.post("/users", wrap(userController.create));
 

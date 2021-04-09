@@ -14,14 +14,14 @@ const login = async (req, res, next) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
     if (!user) {
-        return res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({
+        return res.status(StatusCodes.UNAUTHORIZED).json({
             message: "Email or password does not exist",
         });
     }
 
     const isPasswordValid = await hashHelper.check(password, user.password);
     if (!isPasswordValid) {
-        return res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({
+        return res.status(StatusCodes.UNAUTHORIZED).json({
             message: "Email or password does not exist",
         });
     }

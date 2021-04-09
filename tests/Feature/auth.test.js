@@ -96,7 +96,7 @@ describe("/auth/login", () => {
             password: faker.lorem.word(8),
         };
         const response = await request(app).post("/auth/login").send(data);
-        expect(response.status).toEqual(StatusCodes.UNPROCESSABLE_ENTITY);
+        expect(response.status).toEqual(StatusCodes.UNAUTHORIZED);
         expect(response.body).toMatchObject({
             message: "Email or password does not exist",
         });
@@ -110,7 +110,7 @@ describe("/auth/login", () => {
         };
 
         const response = await request(app).post("/auth/login").send(data);
-        expect(response.status).toEqual(StatusCodes.UNPROCESSABLE_ENTITY);
+        expect(response.status).toEqual(StatusCodes.UNAUTHORIZED);
         expect(response.body).toMatchObject({
             message: "Email or password does not exist",
         });

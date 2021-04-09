@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 const status = require("../../app/database/states");
 
-const healthcheck = async (req, res, next) => {
+const health = async (req, res, next) => {
     res.json({
-        message: "The server is running (Auth API)",
+        message: "The application is running (Auth API)",
         mongodb: {
             connection:
                 mongoose.connection.readyState === status.CONNECTED
@@ -14,5 +14,5 @@ const healthcheck = async (req, res, next) => {
 };
 
 module.exports = {
-    healthcheck,
+    health,
 };
