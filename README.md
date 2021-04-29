@@ -11,7 +11,7 @@ Check the complete API documentation [here](https://editor.swagger.io/?url=https
 
 ## Requeriments
 
-1. This project runs on [Docker](https://docs.docker.com/).
+1. This project runs on [Docker](https://docs.docker.com/)
 
 ## Installation
 
