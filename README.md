@@ -9,7 +9,7 @@ Check the complete documentation of the API [here](https://editor.swagger.io/?ur
 
 ## Requeriments
 
-1. [Docker](https://docs.docker.com/)
+- [Docker](https://docs.docker.com/)
 
 ## Installation
 
