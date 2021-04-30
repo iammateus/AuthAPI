@@ -1,17 +1,16 @@
-
 # Auth API
 
-A Node.js/Express authentication API that uses JWT to provide very simple endpoints, and straightforward user authentication.
+A Node.js authentication API that uses JWT to offer simple endpoints of user authentication.
 
-This project has a basic behavior and it's intended to be the backbone of more complex user management.
+This project has a simple behavior, and it's intended to be the backbone of more complex user management.
 
 ## Usage
 
-Check the complete API documentation [here](https://editor.swagger.io/?url=https://raw.githubusercontent.com/iammateus/AuthAPI/master/openapi.yaml).
+Check the complete documentation of the API [here](https://editor.swagger.io/?url=https://raw.githubusercontent.com/iammateus/AuthAPI/master/openapi.yaml).
 
 ## Requeriments
 
-1. This project runs on [Docker](https://docs.docker.com/)
+1. [Docker](https://docs.docker.com/)
 
 ## Installation
 
