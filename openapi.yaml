@@ -1,6 +1,6 @@
 openapi: "3.0.2"
 info:
-  description: "A Node.js/Express authentication API that uses JWT to provide very simple endpoints, and straightforward user authentication. \n\n This project has a basic behavior and it's intended to be the backbone of more complex user management."
+  description: "A Node.js authentication API that uses JWT to provide simple user authentication endpoints. \n \n This project has a simple behavior, and it's intended to be the backbone of more complex user management."
   version: "1.0.0"
   title: "Auth API"
   license:
