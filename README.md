@@ -21,6 +21,10 @@ Run all tests
 
     $ yarn test
 
+Run all with html report
+
+    $ yarn run test-with-html-report
+
 Run a specific test
 
     $ yarn test-search -- "<describeString> <itString>"
